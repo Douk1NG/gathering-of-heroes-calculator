@@ -107,7 +107,7 @@ export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string
     },
     3: {
         [COMMANDER_CATEGORIES.INFANTRY]: [
-            "Scipio Africanus", "Tokugawa Ieyasu", "Scipio Aemilianus", "Sun Tzu Prime"
+            "Scipio Africanus", "Tokugawa Ieyasu", "Scipio Aemilianus"
         ],
         [COMMANDER_CATEGORIES.ARCHER]: [
             "Choe Yeong", "Shapur I"

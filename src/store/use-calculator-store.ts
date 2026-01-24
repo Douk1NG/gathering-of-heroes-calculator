@@ -49,6 +49,8 @@ interface CalculatorState {
     getUnlockStatus: () => boolean;
     getProgress: () => number;
     getSpeedupMinutes: () => number;
+    isTierUnlocked: (tierId: number) => boolean;
+    getTierUnlockRequirement: (tierId: number) => string | null;
 }
 
 export const useCalculatorStore = create<CalculatorState>((set, get) => ({
@@ -157,7 +159,33 @@ export const useCalculatorStore = create<CalculatorState>((set, get) => ({
 
     getTotalCost: () => {
         const { selectedCommanders } = get();
-        return selectedCommanders.reduce((acc, c) => acc + c.cost, 0);
+        if (selectedCommanders.length === 0) return 0;
+
+        // 1. Calculate actual cost of selected commanders
+        const baseCost = selectedCommanders.reduce((acc, c) => acc + c.cost, 0);
+
+        // 2. Identify the highest tier selected and its minSpend requirement
+        let maxMinSpend = 0;
+        let highestTierId = 0;
+
+        selectedCommanders.forEach(c => {
+            const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+            const minSpend = COMMANDER_TIERS[tierKey].minSpend;
+            if (minSpend > maxMinSpend) {
+                maxMinSpend = minSpend;
+            }
+            if (c.tierId > highestTierId) {
+                highestTierId = c.tierId;
+            }
+        });
+
+        // 3. Cost of commanders in the highest tier selected
+        const highestTierCost = selectedCommanders
+            .filter(c => c.tierId === highestTierId)
+            .reduce((sum, c) => sum + c.cost, 0);
+
+        // Total cost must be at least minSpend of highest tier (spent on lower tiers) + cost of highest tier items
+        return Math.max(baseCost, maxMinSpend + highestTierCost);
     },
 
     getNeededTokens: () => {
@@ -167,21 +195,82 @@ export const useCalculatorStore = create<CalculatorState>((set, get) => ({
     },
 
     getUnlockStatus: () => {
-        const { selectedCommanders } = get();
-        const totalTokens = get().getTotalTokens();
+        const { selectedCommanders, getTotalTokens } = get();
         if (selectedCommanders.length === 0) return true;
 
-        const maxMinSpend = selectedCommanders.reduce((max, c) => {
-            const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
-            return Math.max(max, COMMANDER_TIERS[tierKey].minSpend);
-        }, 0);
+        const totalTokens = getTotalTokens();
 
-        return totalTokens >= maxMinSpend;
+        // 1. Find the highest tier selected
+        let maxMinSpend = 0;
+        let highestTierId = 0;
+
+        selectedCommanders.forEach(c => {
+            const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+            const minSpend = COMMANDER_TIERS[tierKey].minSpend;
+            if (minSpend > maxMinSpend) {
+                maxMinSpend = minSpend;
+            }
+            if (c.tierId > highestTierId) {
+                highestTierId = c.tierId;
+            }
+        });
+
+        // 2. Check if total tokens meet the highest tier's minSpend
+        if (totalTokens < maxMinSpend) return false;
+
+        // 3. Check if current selections in lower tiers meet the requirements for higher tiers
+        for (const c of selectedCommanders) {
+            const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+            const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+            if (requiredLowerSpend > 0) {
+                const actualLowerSpend = selectedCommanders
+                    .filter(lower => lower.name !== c.name && lower.tierId < c.tierId)
+                    .reduce((sum, lower) => sum + lower.cost, 0);
+
+                if (actualLowerSpend < requiredLowerSpend) return false;
+            }
+        }
+
+        return true;
     },
 
     getProgress: () => {
         const totalCost = get().getTotalCost();
         if (totalCost === 0) return 0;
         return Math.min(100, (get().getTotalTokens() / totalCost) * 100);
+    },
+
+    isTierUnlocked: (tierId: number) => {
+        const { selectedCommanders } = get();
+        const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS;
+        const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+        if (requiredLowerSpend === 0) return true;
+
+        const actualLowerSpend = selectedCommanders
+            .filter(c => c.tierId < tierId)
+            .reduce((sum, c) => sum + c.cost, 0);
+
+        return actualLowerSpend >= requiredLowerSpend;
+    },
+
+    getTierUnlockRequirement: (tierId: number) => {
+        const { selectedCommanders } = get();
+        const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS;
+        const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+        if (requiredLowerSpend === 0) return null;
+
+        const actualLowerSpend = selectedCommanders
+            .filter(c => c.tierId < tierId)
+            .reduce((sum, c) => sum + c.cost, 0);
+
+        if (actualLowerSpend >= requiredLowerSpend) return null;
+
+        const difference = requiredLowerSpend - actualLowerSpend;
+        const lowerTiersString = Array.from({ length: tierId - 1 }, (_, i) => (i + 1)).join(' & ');
+
+        return `Spend ${difference} more tokens on Tier ${lowerTiersString}`;
     },
 }));

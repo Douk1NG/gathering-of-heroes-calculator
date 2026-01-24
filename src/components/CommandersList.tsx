@@ -32,7 +32,7 @@ export function CommandersList() {
             </CardHeader>
             <CardContent className="flex-1 flex flex-col space-y-6 pt-4 overflow-hidden">
                 {/* Selected Commanders List */}
-                <div className="flex-1 space-y-2 overflow-y-auto pr-1 custom-scrollbar min-h-[120px]">
+                <div className="flex-1 space-y-2 overflow-y-auto pr-1 custom-scrollbar min-h-30">
                     {selectedCommanders.length > 0 ? (
                         selectedCommanders.map((c: SelectedCommander) => (
                             <div key={c.name} className="flex items-center justify-between p-3 rounded-lg bg-black/5 border border-black/10 group animate-in slide-in-from-right-4 duration-300">

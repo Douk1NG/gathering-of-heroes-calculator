@@ -1,4 +1,4 @@
-import { Sword, BowArrow, ChessKnight, Flag, Settings, Check } from "lucide-react";
+import { Sword, BowArrow, ChessKnight, Flag, Settings, Check, Lock } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { cn, COMMANDER_CATEGORIES, COMMANDER_DATABASE } from "../lib/utils";
 import { useCalculatorStore } from "../store/use-calculator-store";
@@ -58,36 +58,55 @@ export function CommanderSelection() {
                             const commanders = tierData[selectedCategory] || [];
                             if (commanders.length === 0) return null;
 
+                            const isUnlocked = useCalculatorStore.getState().isTierUnlocked(tierId);
+                            const lockReason = useCalculatorStore.getState().getTierUnlockRequirement(tierId);
+
                             return (
-                                <div key={tierId} className="space-y-2">
+                                <div key={tierId} className={cn("space-y-2 transition-opacity duration-300", !isUnlocked && "opacity-50")}>
                                     <div className="flex items-center gap-2">
-                                        <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-white/10 text-white/40 uppercase tracking-tighter">
-                                            Tier {tierId}
-                                        </span>
+                                        <div className="flex items-center gap-1.5 px-1.5 py-0.5 rounded bg-white/10">
+                                            {!isUnlocked && <Lock className="w-2.5 h-2.5 text-yellow-500/60" />}
+                                            <span className="text-[10px] font-black text-white/40 uppercase tracking-tighter">
+                                                Tier {tierId}
+                                            </span>
+                                        </div>
                                         <div className="h-px flex-1 bg-white/5" />
+                                        {!isUnlocked && lockReason && (
+                                            <span className="text-[10px] font-bold text-yellow-500/60 uppercase tracking-widest whitespace-nowrap bg-yellow-500/5 px-2 py-0.5 rounded-full border border-yellow-500/10">
+                                                {lockReason}
+                                            </span>
+                                        )}
                                     </div>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                                         {commanders.map((name: string) => {
                                             const isSelected = !!selectedCommanders.find((c: any) => c.name === name);
+                                            const disabled = !isUnlocked && !isSelected;
+
                                             return (
                                                 <button
                                                     key={name}
+                                                    disabled={disabled}
                                                     onClick={() => toggleCommander(name, selectedCategory as any, tierId)}
                                                     className={cn(
-                                                        "px-3 py-2 rounded-md border text-xs transition-all text-left flex items-center justify-between group",
+                                                        "px-3 py-2 rounded-md border text-xs transition-all text-left flex items-center justify-between group relative overflow-hidden",
                                                         isSelected
                                                             ? "bg-yellow-500 border-yellow-500 text-black font-bold"
-                                                            : "bg-white/5 border-white/5 text-neutral-400 hover:bg-white/10 hover:text-white"
+                                                            : disabled
+                                                                ? "bg-black/20 border-white/5 text-neutral-600 cursor-not-allowed"
+                                                                : "bg-white/5 border-white/5 text-neutral-400 hover:bg-white/10 hover:text-white"
                                                     )}
                                                 >
-                                                    <span className="truncate pr-2">{name}</span>
+                                                    <span className="truncate pr-2 z-10">{name}</span>
                                                     <div className={cn(
-                                                        "w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors",
+                                                        "w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors z-10",
                                                         isSelected
                                                             ? "bg-black/20 border-black/40"
-                                                            : "border-white/20 group-hover:border-white/40"
+                                                            : disabled
+                                                                ? "border-neutral-800"
+                                                                : "border-white/20 group-hover:border-white/40"
                                                     )}>
                                                         {isSelected && <Check className="w-3 h-3 text-black" />}
+                                                        {disabled && <Lock className="w-2.5 h-2.5 text-neutral-700" />}
                                                     </div>
                                                 </button>
                                             );
