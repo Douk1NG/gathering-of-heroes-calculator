@@ -1,0 +1,187 @@
+import { create } from 'zustand';
+import {
+    COMMANDER_TIERS,
+    CHALLENGE_MISSIONS,
+    type CommanderCategory
+} from '../lib/utils';
+
+export interface MissionState {
+    daily: Record<string, number>;
+    challenge: Record<string, number>;
+    repeatable: Record<string, number>;
+    speedupMinutes: {
+        building: number;
+        research: number;
+        training: number;
+        healing: number;
+        universal: number;
+    };
+    totalGemsSpent: number;
+}
+
+export interface SelectedCommander {
+    name: string;
+    tierId: number;
+    category: CommanderCategory;
+    cost: number;
+}
+
+interface CalculatorState {
+    selectedCommanders: SelectedCommander[];
+    missions: MissionState;
+    selectedCategory: CommanderCategory | null;
+    speedupTimeStr: string;
+
+    // Actions
+    toggleCommander: (name: string, category: CommanderCategory, tierId: number) => void;
+    setSelectedCategory: (category: CommanderCategory | null) => void;
+    updateDaily: () => void;
+    updateChallenge: (id: string, value: number) => void;
+    updateRepeatable: (id: string, value: number) => void;
+    updateSpeedupMinutes: (category: keyof MissionState['speedupMinutes'], value: number) => void;
+    updateGemsSpent: (value: number) => void;
+    updateSpeedupTime: (timeStr: string) => void;
+
+    // Selectors/Computed values
+    getTotalTokens: () => number;
+    getTotalCost: () => number;
+    getNeededTokens: () => number;
+    getUnlockStatus: () => boolean;
+    getProgress: () => number;
+    getSpeedupMinutes: () => number;
+}
+
+export const useCalculatorStore = create<CalculatorState>((set, get) => ({
+    selectedCommanders: [],
+    missions: {
+        daily: {},
+        challenge: {},
+        repeatable: {},
+        speedupMinutes: {
+            building: 0,
+            research: 0,
+            training: 0,
+            healing: 0,
+            universal: 0,
+        },
+        totalGemsSpent: 0,
+    },
+    selectedCategory: "Infantry",
+    speedupTimeStr: "",
+
+    toggleCommander: (name, category, tierId) => set((state) => {
+        const isSelected = state.selectedCommanders.find(c => c.name === name);
+        if (isSelected) {
+            return {
+                selectedCommanders: state.selectedCommanders.filter(c => c.name !== name)
+            };
+        } else {
+            const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS;
+            const cost = COMMANDER_TIERS[tierKey].cost;
+            return {
+                selectedCommanders: [...state.selectedCommanders, { name, category, tierId, cost }]
+            };
+        }
+    }),
+
+    setSelectedCategory: (category) => set({ selectedCategory: category }),
+
+    updateDaily: () => { }, // Dailies are now automated
+
+    updateChallenge: (id, value) => set((state) => ({
+        missions: { ...state.missions, challenge: { ...state.missions.challenge, [id]: value } }
+    })),
+
+    updateRepeatable: (id, value) => set((state) => ({
+        missions: { ...state.missions, repeatable: { ...state.missions.repeatable, [id]: Math.max(0, value) } }
+    })),
+
+    updateSpeedupMinutes: (category, value) => set((state) => ({
+        missions: {
+            ...state.missions,
+            speedupMinutes: {
+                ...state.missions.speedupMinutes,
+                [category]: Math.max(0, value)
+            }
+        }
+    })),
+
+    updateGemsSpent: (value) => set((state) => ({
+        missions: { ...state.missions, totalGemsSpent: Math.max(0, value) }
+    })),
+
+    updateSpeedupTime: (timeStr) => set({ speedupTimeStr: timeStr }),
+
+    getSpeedupMinutes: () => {
+        const str = get().speedupTimeStr;
+        if (!str) return 0;
+
+        let totalMinutes = 0;
+        const dayMatch = str.match(/(\d+)d/i);
+        if (dayMatch) totalMinutes += parseInt(dayMatch[1]) * 1440;
+
+        const timeMatch = str.match(/(\d+):(\d+)(?::\d+)?/);
+        if (timeMatch) {
+            totalMinutes += parseInt(timeMatch[1]) * 60;
+            totalMinutes += parseInt(timeMatch[2]);
+        } else if (!dayMatch) {
+            // Check for just minutes if no other format found
+            const minMatch = str.match(/(\d+)\s*m/i);
+            if (minMatch) totalMinutes += parseInt(minMatch[1]);
+        }
+
+        return totalMinutes;
+    },
+
+    getTotalTokens: () => {
+        const { missions, getSpeedupMinutes } = get();
+
+        // 1. Automated Dailies (5 days * 18 tokens per day = 90)
+        const dailyTotal = 90;
+
+        // 2. Challenge Milestones (Checked challenges only)
+        const challengeTotal = CHALLENGE_MISSIONS.reduce((acc, m) => {
+            return acc + (missions.challenge[m.id] || 0) * m.tokens;
+        }, 0);
+
+        // 3. Spending Yields (Strictly from raw volume)
+        const gemSpendTokens = Math.floor(missions.totalGemsSpent / 2000) * 30;
+
+        // 4. Accumulator Yields (Manual Minutes + Calc Minutes)
+        const manualMinutes = Object.values(missions.speedupMinutes).reduce((a, b) => a + b, 0);
+        const calcMinutes = getSpeedupMinutes();
+        const speedupTokens = Math.floor((manualMinutes + calcMinutes) / 480) * 2;
+
+        return dailyTotal + challengeTotal + gemSpendTokens + speedupTokens;
+    },
+
+    getTotalCost: () => {
+        const { selectedCommanders } = get();
+        return selectedCommanders.reduce((acc, c) => acc + c.cost, 0);
+    },
+
+    getNeededTokens: () => {
+        const totalCost = get().getTotalCost();
+        const totalTokens = get().getTotalTokens();
+        return Math.max(0, totalCost - totalTokens);
+    },
+
+    getUnlockStatus: () => {
+        const { selectedCommanders } = get();
+        const totalTokens = get().getTotalTokens();
+        if (selectedCommanders.length === 0) return true;
+
+        const maxMinSpend = selectedCommanders.reduce((max, c) => {
+            const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+            return Math.max(max, COMMANDER_TIERS[tierKey].minSpend);
+        }, 0);
+
+        return totalTokens >= maxMinSpend;
+    },
+
+    getProgress: () => {
+        const totalCost = get().getTotalCost();
+        if (totalCost === 0) return 0;
+        return Math.min(100, (get().getTotalTokens() / totalCost) * 100);
+    },
+}));
