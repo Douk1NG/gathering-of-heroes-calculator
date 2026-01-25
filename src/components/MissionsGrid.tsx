@@ -151,7 +151,7 @@ function ChallengeCard() {
 
 // 3. Reactive Child: Repeatable Card
 function RepeatableCard() {
-    const { totalGemsSpent, speedupMinutes, updateGemsSpent, updateSpeedupMinutes, getSpeedupMinutes, speedupTimeStr } = useCalculatorStore(useShallow((state) => ({
+    const { totalGemsSpent, speedupMinutes, updateGemsSpent, updateSpeedupMinutes, getSpeedupMinutes } = useCalculatorStore(useShallow((state) => ({
         totalGemsSpent: state.missions.totalGemsSpent,
         speedupMinutes: state.missions.speedupMinutes,
         updateGemsSpent: state.updateGemsSpent,
