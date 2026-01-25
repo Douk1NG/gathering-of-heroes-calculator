@@ -1,8 +1,8 @@
 import { Header } from "./components/Header";
 import { MissionsGrid } from "./components/MissionsGrid";
 import { RequirementsInfo } from "./components/RequirementsInfo";
-import { CommanderSelection } from "./components/CommanderSelection";
-import { CommandersList } from "./components/CommandersList";
+import { CommanderSelection } from "./components/commander-selection";
+import { CommandersList } from "./components/commanders-list";
 import { TipsTricks } from "./components/TipsTricks";
 
 function App() {
