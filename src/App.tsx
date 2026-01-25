@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import { MissionsGrid } from "./components/MissionsGrid";
+import { MissionsGrid } from "./components/missions-grid";
 import { RequirementsInfo } from "./components/RequirementsInfo";
 import { CommanderSelection } from "./components/commander-selection";
 import { CommandersList } from "./components/commanders-list";
