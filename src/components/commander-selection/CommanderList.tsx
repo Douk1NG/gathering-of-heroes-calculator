@@ -19,10 +19,7 @@ export function CommanderList() {
 
     return (
         <div className="pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
-            <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
-                {selectedCategory} Commanders
-            </h4>
+            <CategoryHeader />
 
             {Object.entries(COMMANDER_DATABASE).map(([tierIdString, tierData]) => {
                 const tierId = parseInt(tierIdString);
@@ -40,5 +37,15 @@ export function CommanderList() {
                 );
             })}
         </div>
+    );
+}
+
+function CategoryHeader() {
+    const selectedCategory = useCalculatorStore(state => state.selectedCategory);
+    return (
+        <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+            {selectedCategory} Commanders
+        </h4>
     );
 }
