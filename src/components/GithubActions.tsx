@@ -1,7 +1,10 @@
 import { Star, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGithubActions } from "@/hooks/use-github-actions";
 
 export function GithubActions() {
+    const { handleOpenGithub } = useGithubActions();
+
     return (
         <div className="flex flex-col sm:flex-row items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl animate-in fade-in zoom-in duration-500">
             <div className="flex items-center gap-3 pr-4 sm:border-r border-white/10">
@@ -17,7 +20,7 @@ export function GithubActions() {
                 <Button
                     variant="outline"
                     className="flex-1 sm:flex-none h-9 px-3 bg-white/5 border-white/10 hover:bg-yellow-500 hover:text-black transition-all group"
-                    onClick={() => window.open('https://github.com/Douk1NG/gathering-of-heroes-calculator', '_blank')}
+                    onClick={handleOpenGithub}
                 >
                     <Star className="w-4 h-4 mr-2 group-hover:fill-current" />
                     Star

@@ -1,6 +1,6 @@
-import { Header } from "./components/Header";
+import { Header } from "./components/header";
 import { MissionsGrid } from "./components/missions-grid";
-import { RequirementsInfo } from "./components/RequirementsInfo";
+import { RequirementsInfo } from "./components/requirements";
 import { CommanderSelection } from "./components/commander-selection";
 import { CommandersList } from "./components/commanders-list";
 import { TipsTricks } from "./components/TipsTricks";
