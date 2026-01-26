@@ -1,7 +1,7 @@
 import { Lock } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
-import { useCalculatorStore } from "../../store/use-calculator-store";
-import { cn, type CommanderCategory } from "../../lib/utils";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { cn, type CommanderCategory } from "@/lib/utils";
 import { CommanderButton } from "./CommanderButton";
 
 interface TierSectionProps {

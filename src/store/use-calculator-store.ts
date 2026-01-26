@@ -3,7 +3,7 @@ import {
     COMMANDER_TIERS,
     CHALLENGE_MISSIONS,
     type CommanderCategory
-} from '../lib/utils';
+} from '@/lib/utils';
 
 export interface MissionState {
     daily: Record<string, number>;

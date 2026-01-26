@@ -1,5 +1,5 @@
-import { useCalculatorStore } from "../../store/use-calculator-store";
-import { COMMANDER_DATABASE } from "../../lib/utils";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { COMMANDER_DATABASE } from "@/lib/utils";
 import { TierSection } from "./TierSection";
 
 /**

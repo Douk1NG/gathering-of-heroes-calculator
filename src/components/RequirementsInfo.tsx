@@ -1,8 +1,8 @@
 import { CheckCircle2 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
-import { Progress } from "./ui/progress";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { useShallow } from "zustand/react/shallow";
-import { useCalculatorStore } from "../store/use-calculator-store";
+import { useCalculatorStore } from "@/store/use-calculator-store";
 
 // 1. Reactive Child: Progress Section
 function JourneyProgress() {

@@ -1,6 +1,6 @@
 import { Info, Clock } from "lucide-react";
-import { LAST_UPDATED } from "../lib/utils";
-import { GithubActions } from "./GithubActions";
+import { LAST_UPDATED } from "@/lib/utils";
+import { GithubActions } from "@/components/GithubActions";
 
 interface HeaderProps {
     // Props removed since tier is now automatic

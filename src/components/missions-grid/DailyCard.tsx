@@ -1,7 +1,7 @@
 import { Target } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
-import { Label } from "../ui/label";
-import { DAILY_MISSIONS } from "../../lib/utils";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { DAILY_MISSIONS } from "@/lib/utils";
 
 /**
  * DailyCard - Displays automated daily missions

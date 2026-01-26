@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ChallengeTotal } from './ChallengeTotal';
-import { useCalculatorStore } from '../../store/use-calculator-store';
+import { ChallengeTotal } from '@/components/missions-grid/ChallengeTotal';
+import { useCalculatorStore } from '@/store/use-calculator-store';
 
 describe('ChallengeTotal Component', () => {
     beforeEach(() => {

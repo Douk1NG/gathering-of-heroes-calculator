@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
-import { useCalculatorStore } from "../../store/use-calculator-store";
-import { cn } from "../../lib/utils";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { cn } from "@/lib/utils";
 
 interface ChallengeMissionButtonProps {
     missionId: string;

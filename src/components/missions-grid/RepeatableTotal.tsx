@@ -1,4 +1,4 @@
-import { useCalculatorStore } from "../../store/use-calculator-store";
+import { useCalculatorStore } from "@/store/use-calculator-store";
 
 /**
  * RepeatableTotal - Displays total tokens from repeatable missions

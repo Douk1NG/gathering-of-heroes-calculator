@@ -1,4 +1,4 @@
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { ListHeader } from "./ListHeader";
 import { CommanderItems } from "./CommanderItems";
 import { ListSummary } from "./ListSummary";

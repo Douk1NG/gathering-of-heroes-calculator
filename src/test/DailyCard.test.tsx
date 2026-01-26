@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { DailyCard } from './DailyCard';
+import { DailyCard } from '@/components/missions-grid/DailyCard';
 
 describe('DailyCard Component', () => {
     beforeEach(() => {

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ChallengeMissionButton } from './ChallengeMissionButton';
-import { useCalculatorStore } from '../../store/use-calculator-store';
+import { ChallengeMissionButton } from '@/components/missions-grid/ChallengeMissionButton';
+import { useCalculatorStore } from '@/store/use-calculator-store';
 
 describe('ChallengeMissionButton Component', () => {
     beforeEach(() => {

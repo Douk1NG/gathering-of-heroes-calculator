@@ -1,6 +1,6 @@
 import { ShoppingCart } from "lucide-react";
-import { CardHeader, CardTitle } from "../ui/card";
-import { useCalculatorStore } from "../../store/use-calculator-store";
+import { CardHeader, CardTitle } from "@/components/ui/card";
+import { useCalculatorStore } from "@/store/use-calculator-store";
 
 /**
  * ListHeader - Displays the commanders list title and item count

@@ -1,7 +1,7 @@
 import { Coins } from "lucide-react";
-import { useCalculatorStore } from "../../store/use-calculator-store";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 /**
  * GemsInput - Gem spending input and calculation

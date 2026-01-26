@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { useCalculatorStore, type SelectedCommander } from "../../store/use-calculator-store";
+import { useCalculatorStore, type SelectedCommander } from "@/store/use-calculator-store";
 
 interface CommanderItemProps {
     commander: SelectedCommander;

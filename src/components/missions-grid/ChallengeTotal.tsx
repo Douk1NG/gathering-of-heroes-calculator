@@ -1,5 +1,5 @@
-import { useCalculatorStore } from "../../store/use-calculator-store";
-import { CHALLENGE_MISSIONS } from "../../lib/utils";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { CHALLENGE_MISSIONS } from "@/lib/utils";
 
 /**
  * ChallengeTotal - Displays total tokens from challenge missions

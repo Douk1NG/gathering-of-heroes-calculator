@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useCalculatorStore } from './use-calculator-store';
-import { COMMANDER_TIERS } from '../lib/utils';
+import { useCalculatorStore } from '@/store/use-calculator-store';
+import { COMMANDER_TIERS } from '@/lib/utils';
 
 describe('useCalculatorStore - Target Selection', () => {
     beforeEach(() => {

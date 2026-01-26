@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { GemsInput } from './GemsInput';
-import { useCalculatorStore } from '../../store/use-calculator-store';
+import { GemsInput } from '@/components/missions-grid/GemsInput';
+import { useCalculatorStore } from '@/store/use-calculator-store';
 
 describe('GemsInput Component', () => {
     beforeEach(() => {

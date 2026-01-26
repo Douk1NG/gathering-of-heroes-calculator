@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SpeedupInputs } from './SpeedupInputs';
-import { useCalculatorStore } from '../../store/use-calculator-store';
+import { SpeedupInputs } from '@/components/missions-grid/SpeedupInputs';
+import { useCalculatorStore } from '@/store/use-calculator-store';
 
 describe('SpeedupInputs Component', () => {
     beforeEach(() => {

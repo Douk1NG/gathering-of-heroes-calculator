@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { MissionsGrid } from './index';
-import { useCalculatorStore } from '../../store/use-calculator-store';
+import { MissionsGrid } from '@/components/missions-grid/index';
+import { useCalculatorStore } from '@/store/use-calculator-store';
 
 describe('MissionsGrid Integration Tests', () => {
     beforeEach(() => {

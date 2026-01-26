@@ -1,5 +1,5 @@
 import { Swords } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { GemsInput } from "./GemsInput";
 import { SpeedupInputs } from "./SpeedupInputs";
 import { RepeatableTotal } from "./RepeatableTotal";
