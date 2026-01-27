@@ -1,4 +1,5 @@
 import { useCalculatorStore } from "@/store/use-calculator-store";
+import { parseSpeedupTime } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
@@ -10,6 +11,19 @@ export function SpeedupInputs() {
     const speedupMinutes = useCalculatorStore(state => state.missions.speedupMinutes);
     const updateSpeedupMinutes = useCalculatorStore(state => state.updateSpeedupMinutes);
     const getSpeedupMinutes = useCalculatorStore(state => state.getSpeedupMinutes);
+    const speedupInputMode = useCalculatorStore(state => state.speedupInputMode);
+    const setSpeedupInputMode = useCalculatorStore(state => state.setSpeedupInputMode);
+
+    // Helper to format display value based on mode
+    const getDisplayValue = (val: number) => {
+        if (!val) return "";
+        if (speedupInputMode === 'days') {
+            const days = val / 1440;
+            // Show up to 2 decimal places if needed, otherwise integer
+            return days % 1 === 0 ? days.toString() : days.toFixed(2);
+        }
+        return val.toString();
+    };
 
     const manualSpeedupMinutes = Object.values(speedupMinutes).reduce((a, b) => a + b, 0);
     const calcMinutes = getSpeedupMinutes();
@@ -21,17 +35,38 @@ export function SpeedupInputs() {
                 <Label className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Speedup Volume (min)</Label>
                 <span className="text-[10px] font-bold text-blue-500/60 uppercase">2 Per 480m</span>
             </div>
+
+            <div className="flex gap-1 bg-black/40 p-1 rounded-md border border-white/5 mb-2">
+                {(['auto', 'days', 'minutes'] as const).map((mode) => (
+                    <button
+                        key={mode}
+                        onClick={() => setSpeedupInputMode(mode)}
+                        className={`
+                            flex-1 px-2 py-1.5 text-[10px] font-bold uppercase rounded transition-all
+                            ${speedupInputMode === mode
+                                ? "bg-blue-500/20 text-blue-400 shadow-[0_0_10px_-3px_rgba(59,130,246,0.3)]"
+                                : "text-neutral-500 hover:text-neutral-300 hover:bg-white/5"}
+                        `}
+                    >
+                        {mode}
+                    </button>
+                ))}
+            </div>
+
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                 {Object.entries(speedupMinutes).map(([cat, val]) => (
                     <div key={cat} className="space-y-1">
-                        <Label className="text-[9px] font-bold text-neutral-500 uppercase pl-1">{cat} (min)</Label>
+                        <Label className="text-[9px] font-bold text-neutral-500 uppercase pl-1">{cat}</Label>
                         <Input
-                            type="number"
-                            min={0}
+                            type="text"
                             className="h-8 bg-black/40 border-white/5 text-xs font-mono focus-visible:ring-blue-500/20"
-                            value={val || ""}
-                            placeholder="0"
-                            onChange={(e) => updateSpeedupMinutes(cat as any, parseInt(e.target.value) || 0)}
+                            value={getDisplayValue(val)}
+                            placeholder={speedupInputMode === 'days' ? "0d" : "0m"}
+                            onChange={(e) => {
+                                // Calculate new minutes based on Input + Mode
+                                const newVal = parseSpeedupTime(e.target.value, speedupInputMode);
+                                updateSpeedupMinutes(cat as any, newVal);
+                            }}
                         />
                     </div>
                 ))}

@@ -22,12 +22,16 @@ export function GemsInput() {
             <div className="relative">
                 <Coins className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600" />
                 <Input
-                    type="number"
-                    min={0}
+                    type="text"
                     className="h-10 pl-10 bg-black/40 border-white/5 text-sm font-mono focus-visible:ring-yellow-500/20"
-                    value={totalGemsSpent || ""}
+                    value={totalGemsSpent ? new Intl.NumberFormat('de-DE').format(totalGemsSpent) : ""}
                     placeholder="Total Gems to spend..."
-                    onChange={(e) => updateGemsSpent(parseInt(e.target.value) || 0)}
+                    onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\./g, '');
+                        if (/^\d*$/.test(rawValue)) {
+                            updateGemsSpent(parseInt(rawValue) || 0);
+                        }
+                    }}
                 />
             </div>
             {gemSpendTokens > 0 && (

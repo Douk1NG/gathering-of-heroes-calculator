@@ -1,4 +1,4 @@
-export const LAST_UPDATED = "Jan 24, 2026";
+export const LAST_UPDATED = "Jan 27, 2026";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -131,3 +131,53 @@ export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string
         ]
     }
 };
+
+export type SpeedupInputMode = 'auto' | 'days' | 'minutes';
+
+export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto'): number {
+    if (!timeStr) return 0;
+    const cleanStr = timeStr.trim();
+    if (!cleanStr) return 0;
+
+    // 1. Explicit Mode: Days
+    if (mode === 'days') {
+        const days = parseFloat(cleanStr);
+        return isNaN(days) ? 0 : Math.floor(days * 1440);
+    }
+
+    // 2. Explicit Mode: Minutes
+    if (mode === 'minutes') {
+        const minutes = parseFloat(cleanStr);
+        return isNaN(minutes) ? 0 : Math.floor(minutes);
+    }
+
+    // 3. Auto Mode (Existing logic + enhancements)
+    let totalMinutes = 0;
+
+    // Check for HH:MM:SS or HH:MM format first
+    const timeMatch = cleanStr.match(/^(\d+):(\d+)(?::(\d+))?$/);
+    if (timeMatch) {
+        totalMinutes += parseInt(timeMatch[1]) * 60;
+        totalMinutes += parseInt(timeMatch[2]);
+        // Seconds are ignored for minute calculation logic usually, or round up? 
+        // Existing logic didn't account for seconds explicitly in token calculation, just time sum.
+        return totalMinutes;
+    }
+
+    // Check for "Xd Xh Xm" format
+    const dayMatch = cleanStr.match(/(\d+)\s*d/i);
+    if (dayMatch) totalMinutes += parseInt(dayMatch[1]) * 1440;
+
+    const hourMatch = cleanStr.match(/(\d+)\s*h/i);
+    if (hourMatch) totalMinutes += parseInt(hourMatch[1]) * 60;
+
+    const minMatch = cleanStr.match(/(\d+)\s*m/i);
+    if (minMatch) totalMinutes += parseInt(minMatch[1]);
+
+    // Fallback: if just a number is provided in auto mode, treat as minutes if it looks like an integer
+    if (totalMinutes === 0 && /^\d+$/.test(cleanStr)) {
+        totalMinutes = parseInt(cleanStr);
+    }
+
+    return totalMinutes;
+}

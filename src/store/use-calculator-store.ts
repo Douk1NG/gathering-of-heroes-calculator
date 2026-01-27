@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import {
     COMMANDER_TIERS,
     CHALLENGE_MISSIONS,
-    type CommanderCategory
+    type CommanderCategory,
+    parseSpeedupTime,
+    type SpeedupInputMode
 } from '@/lib/utils';
 
 export interface MissionState {
@@ -31,10 +33,12 @@ interface CalculatorState {
     missions: MissionState;
     selectedCategory: CommanderCategory | null;
     speedupTimeStr: string;
+    speedupInputMode: SpeedupInputMode;
 
     // Actions
     toggleCommander: (name: string, category: CommanderCategory, tierId: number) => void;
     setSelectedCategory: (category: CommanderCategory | null) => void;
+    setSpeedupInputMode: (mode: SpeedupInputMode) => void;
     updateDaily: () => void;
     updateChallenge: (id: string, value: number) => void;
     updateRepeatable: (id: string, value: number) => void;
@@ -70,6 +74,7 @@ export const useCalculatorStore = create<CalculatorState>((set, get) => ({
     },
     selectedCategory: "Infantry",
     speedupTimeStr: "",
+    speedupInputMode: "auto",
 
     toggleCommander: (name, category, tierId) => set((state) => {
         const isSelected = state.selectedCommanders.find(c => c.name === name);
@@ -87,6 +92,8 @@ export const useCalculatorStore = create<CalculatorState>((set, get) => ({
     }),
 
     setSelectedCategory: (category) => set({ selectedCategory: category }),
+
+    setSpeedupInputMode: (mode) => set({ speedupInputMode: mode }),
 
     updateDaily: () => { }, // Dailies are now automated
 
@@ -116,23 +123,8 @@ export const useCalculatorStore = create<CalculatorState>((set, get) => ({
 
     getSpeedupMinutes: () => {
         const str = get().speedupTimeStr;
-        if (!str) return 0;
-
-        let totalMinutes = 0;
-        const dayMatch = str.match(/(\d+)d/i);
-        if (dayMatch) totalMinutes += parseInt(dayMatch[1]) * 1440;
-
-        const timeMatch = str.match(/(\d+):(\d+)(?::\d+)?/);
-        if (timeMatch) {
-            totalMinutes += parseInt(timeMatch[1]) * 60;
-            totalMinutes += parseInt(timeMatch[2]);
-        } else if (!dayMatch) {
-            // Check for just minutes if no other format found
-            const minMatch = str.match(/(\d+)\s*m/i);
-            if (minMatch) totalMinutes += parseInt(minMatch[1]);
-        }
-
-        return totalMinutes;
+        const mode = get().speedupInputMode;
+        return parseSpeedupTime(str, mode);
     },
 
     getTotalTokens: () => {
