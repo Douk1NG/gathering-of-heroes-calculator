@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
+// Helper to get commander image path
+// Assumes images are in public/commanders/ with format "name-lower-kebab.png"
+export function getCommanderImageSrc(name: string): string {
+    const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/['.]/g, '');
+    const baseUrl = import.meta.env.BASE_URL;
+    return `${baseUrl}commanders/${slug}.png`;
+}
+
 // Business Logic
 export const COMMANDER_TIERS = {
     TIER_1: {
@@ -85,7 +93,7 @@ export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string
             "Trajan", "Theodora", "Moctezuma I", "Suleiman I"
         ],
         [COMMANDER_CATEGORIES.ENGINEERING]: [
-            "John Hunyadi", "Afonso de Albuquerque", "Mary I", "Archimedes"
+            "John Hunyadi", "Alfonso de Albuquerque", "Mary I", "Archimedes"
         ]
     },
     2: {

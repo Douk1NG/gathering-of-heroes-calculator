@@ -1,4 +1,5 @@
 import { Trash2 } from "lucide-react";
+import { CommanderAvatar } from "@/components/ui/commander-avatar";
 import { useCalculatorStore, type SelectedCommander } from "@/store/use-calculator-store";
 
 interface CommanderItemProps {
@@ -15,14 +16,16 @@ export function CommanderItem({ commander }: CommanderItemProps) {
 
     return (
         <div className="flex items-center justify-between p-3 rounded-lg bg-black/5 border border-black/10 group animate-in slide-in-from-right-4 duration-300">
-            <div className="flex flex-col">
-                <span className="text-sm font-black leading-tight">{commander.name}</span>
-                <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest flex items-center gap-1">
-                    Tier {commander.tierId} • {commander.category}
-                </span>
+            <div className="flex items-center gap-3">
+                <CommanderAvatar name={commander.name} size="md" />
+                <div>
+                    <p className="font-bold text-sm text-white">{commander.name}</p>
+                    <p className="text-[10px] text-black font-mono">
+                        TIER {commander.tierId} • {commander.cost} TOKENS
+                    </p>
+                </div>
             </div>
             <div className="flex items-center gap-3">
-                <span className="text-sm font-black">{commander.cost}</span>
                 <button
                     onClick={() => toggleCommander(commander.name, commander.category, commander.tierId)}
                     className="p-1.5 rounded-md hover:bg-black/10 text-black/40 hover:text-black transition-colors"

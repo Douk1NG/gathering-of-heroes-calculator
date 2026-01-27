@@ -1,4 +1,5 @@
 import { Check, Lock } from "lucide-react";
+import { CommanderAvatar } from "@/components/ui/commander-avatar";
 import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
 import { cn, type CommanderCategory } from "@/lib/utils";
@@ -39,7 +40,14 @@ export function CommanderButton({ name, tierId, category }: CommanderButtonProps
                         : "bg-white/5 border-white/5 text-neutral-400 hover:bg-white/10 hover:text-white"
             )}
         >
-            <span className="truncate pr-2 z-10">{name}</span>
+            <div className="flex items-center gap-3 overflow-hidden flex-1">
+                <CommanderAvatar name={name} size="sm" className={cn(
+                    "transition-opacity",
+                    disabled ? "opacity-40 grayscale" : "opacity-100"
+                )} />
+                <span className="truncate pr-2 z-10">{name}</span>
+            </div>
+
             <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors z-10",
                 isSelected
