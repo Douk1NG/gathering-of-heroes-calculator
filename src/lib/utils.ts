@@ -14,125 +14,44 @@ export function getCommanderImageSrc(name: string): string {
     return `${baseUrl}commanders/${slug}.png`;
 }
 
-// Business Logic
-export const COMMANDER_TIERS = {
-    TIER_1: {
-        id: 1,
-        name: "Tier 1",
-        cost: 200,
-        minSpend: 0
-    },
-    TIER_2: {
-        id: 2,
-        name: "Tier 2",
-        cost: 500,
-        minSpend: 400
-    },
-    TIER_3: {
-        id: 3,
-        name: "Tier 3",
-        cost: 1000,
-        minSpend: 1400
-    }
-} as const;
+import { CHALLENGE_MISSIONS, COMMANDER_TIERS, type CommanderCategory } from "./constants";
 
-export type CommanderTier = typeof COMMANDER_TIERS[keyof typeof COMMANDER_TIERS];
+export {
+    COMMANDER_TIERS,
+    MISSION_TYPES,
+    DAILY_MISSIONS,
+    CHALLENGE_MISSIONS,
+    REPEATABLE_MISSIONS,
+    EVENT_DURATION_DAYS,
+    COMMANDER_CATEGORIES,
+    COMMANDER_DATABASE,
+    type CommanderTier,
+    type CommanderCategory
+} from "./constants";
 
-export const MISSION_TYPES = {
-    DAILY: "Daily Missions",
-    CHALLENGE: "Challenge Missions",
-    REPEATABLE: "Repeatable Missions"
-} as const;
-
-export const DAILY_MISSIONS = [
-    { id: "login", name: "Log In", tokens: 2 },
-    { id: "barbs", name: "Defeat Barbarians (100)", tokens: 10 },
-    { id: "gather", name: "Gather 2Million Resources", tokens: 6 },
-] as const;
-
-export const CHALLENGE_MISSIONS = [
-    { id: "login5", name: "Log In 5 Days", tokens: 10 },
-    { id: "gems10k", name: "Spend 10k Gems", tokens: 20 },
-    { id: "gems50k", name: "Spend 50k Gems", tokens: 100 },
-    { id: "troop_power", name: "Increase Troop Power (600k)", tokens: 100 },
-] as const;
-
-export const REPEATABLE_MISSIONS = [
-    { id: "gems2k", name: "Spend 2k Gems", tokens: 30 },
-    { id: "speedups", name: "Use 480m Speedups", tokens: 2 },
-] as const;
-
-export const EVENT_DURATION_DAYS = 5;
-
-export const COMMANDER_CATEGORIES = {
-    INFANTRY: "Infantry",
-    ARCHER: "Archer",
-    CAVALRY: "Cavalry",
-    LEADERSHIP: "Leadership",
-    ENGINEERING: "Engineering"
-} as const;
-
-export type CommanderCategory = typeof COMMANDER_CATEGORIES[keyof typeof COMMANDER_CATEGORIES];
-
-export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string[]>> = {
-    1: {
-        [COMMANDER_CATEGORIES.INFANTRY]: [
-            "Bai Qi", "William Wallace", "Guan Yu", "Harald Sigurdsson",
-            "Zenobia", "K'inich Janaab Pakal", "Leonidas I"
-        ],
-        [COMMANDER_CATEGORIES.ARCHER]: [
-            "Qin Shi Huang", "Shajar al-Durr", "Ramesses II",
-            "Amanitore", "Gilgamesh", "Nebuchadnezzar II", "Artemisia I"
-        ],
-        [COMMANDER_CATEGORIES.CAVALRY]: [
-            "Arthur Pendragon", "Gang Gam-chan", "Belisarius",
-            "Attila", "William I", "Xiang Yu", "Jadwiga", "Chandragupta Maurya"
-        ],
-        [COMMANDER_CATEGORIES.LEADERSHIP]: [
-            "Philip II", "Hector", "Honda Tadakatsu", "Yi Sun Sin",
-            "Trajan", "Theodora", "Moctezuma I", "Suleiman I"
-        ],
-        [COMMANDER_CATEGORIES.ENGINEERING]: [
-            "John Hunyadi", "Alfonso de Albuquerque", "Mary I", "Archimedes"
-        ]
-    },
-    2: {
-        [COMMANDER_CATEGORIES.INFANTRY]: [
-            "Liu Che", "Gorgo", "Tariq ibn Ziyad", "Sargon the Great", "Flavius Aetius"
-        ],
-        [COMMANDER_CATEGORIES.ARCHER]: [
-            "Zhuge Liang", "Hermann", "Ashurbanipal", "Boudica", "Henry V", "Dido"
-        ],
-        [COMMANDER_CATEGORIES.CAVALRY]: [
-            "Huo Qubing", "Joan of Arc", "Alexander Nevsky", "Justinian I", "Jan Zizka"
-        ],
-        [COMMANDER_CATEGORIES.LEADERSHIP]: [
-            "Heraclius", "Lapulapu"
-        ],
-        [COMMANDER_CATEGORIES.ENGINEERING]: [
-            "Gonzalo de Córdoba", "Gajah Mada", "Margaret I", "Babur"
-        ]
-    },
-    3: {
-        [COMMANDER_CATEGORIES.INFANTRY]: [
-            "Scipio Africanus", "Tokugawa Ieyasu", "Scipio Aemilianus"
-        ],
-        [COMMANDER_CATEGORIES.ARCHER]: [
-            "Choe Yeong", "Shapur I"
-        ],
-        [COMMANDER_CATEGORIES.CAVALRY]: [
-            "Achilles", "Subutai", "David IV", "Eleanor of Aquitaine"
-        ],
-        [COMMANDER_CATEGORIES.LEADERSHIP]: [
-            "Matthias I"
-        ],
-        [COMMANDER_CATEGORIES.ENGINEERING]: [
-            "Stephen III"
-        ]
-    }
-};
 
 export type SpeedupInputMode = 'auto' | 'days' | 'minutes';
+
+export interface MissionState {
+    daily: Record<string, number>;
+    challenge: Record<string, number>;
+    repeatable: Record<string, number>;
+    speedupMinutes: {
+        building: number;
+        research: number;
+        training: number;
+        healing: number;
+        universal: number;
+    };
+    totalGemsSpent: number;
+}
+
+export interface SelectedCommander {
+    name: string;
+    tierId: number;
+    category: CommanderCategory;
+    cost: number;
+}
 
 export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto'): number {
     if (!timeStr) return 0;
@@ -154,14 +73,11 @@ export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto
     // 3. Auto Mode (Existing logic + enhancements)
     let totalMinutes = 0;
 
-    // Check for HH:MM:SS or HH:MM format first
-    const timeMatch = cleanStr.match(/^(\d+):(\d+)(?::(\d+))?$/);
+    // Check for HH:MM:SS or HH:MM format (anywhere in string)
+    const timeMatch = cleanStr.match(/(\d+):(\d+)(?::(\d+))?/);
     if (timeMatch) {
         totalMinutes += parseInt(timeMatch[1]) * 60;
         totalMinutes += parseInt(timeMatch[2]);
-        // Seconds are ignored for minute calculation logic usually, or round up? 
-        // Existing logic didn't account for seconds explicitly in token calculation, just time sum.
-        return totalMinutes;
     }
 
     // Check for "Xd Xh Xm" format
@@ -169,6 +85,9 @@ export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto
     if (dayMatch) totalMinutes += parseInt(dayMatch[1]) * 1440;
 
     const hourMatch = cleanStr.match(/(\d+)\s*h/i);
+    // Only match "h" if it's NOT part of the HH:MM extraction? 
+    // Actually, usually inputs are either "1d 2h" OR "1d 12:00:00".
+    // Does "12:00" contain "h"? No.
     if (hourMatch) totalMinutes += parseInt(hourMatch[1]) * 60;
 
     const minMatch = cleanStr.match(/(\d+)\s*m/i);
@@ -180,4 +99,133 @@ export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto
     }
 
     return totalMinutes;
+}
+
+// --- Pure Calculation Functions ---
+
+export function calculateSpeedupTokens(
+    speedupMinutes: MissionState['speedupMinutes'],
+    timeStr: string,
+    mode: SpeedupInputMode
+): number {
+    const manualMinutes = Object.values(speedupMinutes).reduce((a, b) => a + b, 0);
+    const calcMinutes = parseSpeedupTime(timeStr, mode);
+    return Math.floor((manualMinutes + calcMinutes) / 480) * 2;
+}
+
+export function calculateTotalTokens(
+    missions: MissionState,
+    speedupTokens: number
+): number {
+    // 1. Automated Dailies (5 days * 18 tokens per day = 90)
+    const dailyTotal = 90;
+
+    // 2. Challenge Milestones (Checked challenges only)
+    const challengeTotal = CHALLENGE_MISSIONS.reduce((acc, m) => {
+        return acc + (missions.challenge[m.id] || 0) * m.tokens;
+    }, 0);
+
+    // 3. Spending Yields (Strictly from raw volume)
+    const gemSpendTokens = Math.floor(missions.totalGemsSpent / 2000) * 30;
+
+    return dailyTotal + challengeTotal + gemSpendTokens + speedupTokens;
+}
+
+export function calculateTotalCost(selectedCommanders: SelectedCommander[]): number {
+    if (selectedCommanders.length === 0) return 0;
+
+    // 1. Calculate actual cost of selected commanders
+    const baseCost = selectedCommanders.reduce((acc, c) => acc + c.cost, 0);
+
+    // 2. Identify the highest tier selected and its minSpend requirement
+    let maxMinSpend = 0;
+    let highestTierId = 0;
+
+    selectedCommanders.forEach(c => {
+        const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+        const minSpend = COMMANDER_TIERS[tierKey].minSpend;
+        if (minSpend > maxMinSpend) {
+            maxMinSpend = minSpend;
+        }
+        if (c.tierId > highestTierId) {
+            highestTierId = c.tierId;
+        }
+    });
+
+    // 3. Cost of commanders in the highest tier selected
+    const highestTierCost = selectedCommanders
+        .filter(c => c.tierId === highestTierId)
+        .reduce((sum, c) => sum + c.cost, 0);
+
+    // Total cost must be at least minSpend of highest tier (spent on lower tiers) + cost of highest tier items
+    return Math.max(baseCost, maxMinSpend + highestTierCost);
+}
+
+export function checkUnlockStatus(selectedCommanders: SelectedCommander[], totalTokens: number): boolean {
+    if (selectedCommanders.length === 0) return true;
+
+    // 1. Find the highest tier selected
+    let maxMinSpend = 0;
+    let highestTierId = 0;
+
+    selectedCommanders.forEach(c => {
+        const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+        const minSpend = COMMANDER_TIERS[tierKey].minSpend;
+        if (minSpend > maxMinSpend) {
+            maxMinSpend = minSpend;
+        }
+        if (c.tierId > highestTierId) {
+            highestTierId = c.tierId;
+        }
+    });
+
+    // 2. Check if total tokens meet the highest tier's minSpend
+    if (totalTokens < maxMinSpend) return false;
+
+    // 3. Check if current selections in lower tiers meet the requirements for higher tiers
+    for (const c of selectedCommanders) {
+        const tierKey = `TIER_${c.tierId}` as keyof typeof COMMANDER_TIERS;
+        const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+        if (requiredLowerSpend > 0) {
+            const actualLowerSpend = selectedCommanders
+                .filter(lower => lower.name !== c.name && lower.tierId < c.tierId)
+                .reduce((sum, lower) => sum + lower.cost, 0);
+
+            if (actualLowerSpend < requiredLowerSpend) return false;
+        }
+    }
+
+    return true;
+}
+
+export function checkTierUnlock(selectedCommanders: SelectedCommander[], tierId: number): boolean {
+    const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS;
+    const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+    if (requiredLowerSpend === 0) return true;
+
+    const actualLowerSpend = selectedCommanders
+        .filter(c => c.tierId < tierId)
+        .reduce((sum, c) => sum + c.cost, 0);
+
+    return actualLowerSpend >= requiredLowerSpend;
+}
+
+export function getTierUnlockRequirement(selectedCommanders: SelectedCommander[], tierId: number): string | null {
+    const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS;
+    const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend;
+
+    if (requiredLowerSpend === 0) return null;
+
+    const actualLowerSpend = selectedCommanders
+        .filter(c => c.tierId < tierId)
+        .reduce((sum, c) => sum + c.cost, 0);
+
+    if (actualLowerSpend >= requiredLowerSpend) return null;
+
+    const difference = requiredLowerSpend - actualLowerSpend;
+    const lowerTiersString = Array.from({ length: tierId - 1 }, (_, i) => (i + 1)).join(' & ');
+
+    return `Spend ${difference} more tokens on Tier ${lowerTiersString}`;
 }

@@ -1,6 +1,6 @@
 import { Trophy } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { CHALLENGE_MISSIONS } from "@/lib/utils";
+import { CHALLENGE_MISSIONS } from "@/lib/constants";
 import { ChallengeMissionButton } from "./ChallengeMissionButton";
 import { SpeedupCalculator } from "./SpeedupCalculator";
 import { ChallengeTotal } from "./ChallengeTotal";

@@ -50,8 +50,8 @@ describe('MissionsGrid Integration Tests', () => {
     it('renders repeatable card inputs', () => {
         render(<MissionsGrid />);
         expect(screen.getByPlaceholderText('Total Gems to spend...')).toBeInTheDocument();
-        expect(screen.getByText('building (min)')).toBeInTheDocument();
-        expect(screen.getByText('research (min)')).toBeInTheDocument();
+        expect(screen.getByText('building')).toBeInTheDocument();
+        expect(screen.getByText('research')).toBeInTheDocument();
     });
 
     it('displays correct initial totals', () => {

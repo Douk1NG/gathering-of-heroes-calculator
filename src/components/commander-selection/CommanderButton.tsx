@@ -2,7 +2,8 @@ import { Check, Lock } from "lucide-react";
 import { CommanderAvatar } from "@/components/ui/commander-avatar";
 import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { cn, type CommanderCategory } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { type CommanderCategory } from "@/lib/constants";
 
 interface CommanderButtonProps {
     name: string;

@@ -9,7 +9,7 @@ export function CommanderItems() {
     const selectedCommanders = useCalculatorStore(state => state.selectedCommanders);
 
     return (
-        <div className="flex-1 space-y-2 overflow-y-auto pr-1 custom-scrollbar max-h-80">
+        <div className="flex-1 space-y-2 overflow-y-auto pr-1 custom-scrollbar max-h-[60vh]">
             {selectedCommanders.length > 0 ? (
                 selectedCommanders.map((commander) => (
                     <CommanderItem key={commander.name} commander={commander} />

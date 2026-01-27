@@ -1,7 +1,8 @@
 import { Sword, BowArrow, ChessKnight, Flag, Settings } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { cn, COMMANDER_CATEGORIES } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { COMMANDER_CATEGORIES } from "@/lib/constants";
 
 /**
  * Maps each commander category to its corresponding icon

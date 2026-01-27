@@ -27,11 +27,11 @@ describe('SpeedupInputs Component', () => {
 
     it('renders all speedup category inputs', () => {
         render(<SpeedupInputs />);
-        expect(screen.getByText('building (min)')).toBeInTheDocument();
-        expect(screen.getByText('research (min)')).toBeInTheDocument();
-        expect(screen.getByText('training (min)')).toBeInTheDocument();
-        expect(screen.getByText('healing (min)')).toBeInTheDocument();
-        expect(screen.getByText('universal (min)')).toBeInTheDocument();
+        expect(screen.getByText('building')).toBeInTheDocument();
+        expect(screen.getByText('research')).toBeInTheDocument();
+        expect(screen.getByText('training')).toBeInTheDocument();
+        expect(screen.getByText('healing')).toBeInTheDocument();
+        expect(screen.getByText('universal')).toBeInTheDocument();
     });
 
     it('displays speedup volume label and conversion rate', () => {
@@ -42,7 +42,7 @@ describe('SpeedupInputs Component', () => {
 
     it('updates store when speedup value changes for a category', () => {
         render(<SpeedupInputs />);
-        const inputs = screen.getAllByPlaceholderText('0');
+        const inputs = screen.getAllByPlaceholderText('0m');
         const buildingInput = inputs[0]; // First input should be building
 
         fireEvent.change(buildingInput, { target: { value: '1000' } });

@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import { CommanderAvatar } from "@/components/ui/commander-avatar";
-import { useCalculatorStore, type SelectedCommander } from "@/store/use-calculator-store";
+import { useCalculatorStore } from "@/store/use-calculator-store";
+import { type SelectedCommander } from "@/lib/utils";
 
 interface CommanderItemProps {
     commander: SelectedCommander;
