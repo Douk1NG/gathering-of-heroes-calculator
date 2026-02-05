@@ -1,4 +1,4 @@
-export const LAST_UPDATED = "Jan 27, 2026";
+export const LAST_UPDATED = "Feb 05, 2026";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 

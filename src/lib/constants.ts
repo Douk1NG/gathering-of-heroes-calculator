@@ -61,7 +61,7 @@ export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string
     1: {
         [COMMANDER_CATEGORIES.INFANTRY]: [
             "Bai Qi", "William Wallace", "Guan Yu", "Harald Sigurdsson",
-            "Zenobia", "K'inich Janaab Pakal", "Leonidas I"
+            "Zenobia", "K'inich Janaab Pakal", "Leonidas I", "Ivar"
         ],
         [COMMANDER_CATEGORIES.ARCHER]: [
             "Qin Shi Huang", "Shajar al-Durr", "Ramesses II",
@@ -98,7 +98,7 @@ export const COMMANDER_DATABASE: Record<number, Record<CommanderCategory, string
     },
     3: {
         [COMMANDER_CATEGORIES.INFANTRY]: [
-            "Scipio Africanus", "Tokugawa Ieyasu", "Scipio Aemilianus"
+            "Scipio Africanus", "Tokugawa Ieyasu", "Scipio Aemilianus", "Sun Tzu Prime"
         ],
         [COMMANDER_CATEGORIES.ARCHER]: [
             "Choe Yeong", "Shapur I"
