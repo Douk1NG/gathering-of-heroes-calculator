@@ -3,12 +3,13 @@ import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
 import { cn } from "@/lib/utils";
 import { type CommanderCategory } from "@/lib/constants";
+import { type CommanderData } from "@/lib/types";
 import { CommanderButton } from "./CommanderButton";
 
 interface TierSectionProps {
     tierId: number;
     category: CommanderCategory;
-    commanders: string[];
+    commanders: CommanderData[];
 }
 
 /**
@@ -41,8 +42,8 @@ export function TierSection({ tierId, category, commanders }: TierSectionProps) 
                 )}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {commanders.map((name) => (
-                    <CommanderButton key={name} name={name} tierId={tierId} category={category} />
+                {commanders.map((commander) => (
+                    <CommanderButton key={commander.name} name={commander.name} tierId={tierId} category={category} />
                 ))}
             </div>
         </div>

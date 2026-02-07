@@ -1,5 +1,6 @@
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { COMMANDER_DATABASE } from "@/lib/constants";
+import { COMMANDERS } from "@/lib/utils";
+import { COMMANDER_TIERS } from "@/lib/constants";
 import { TierSection } from "./TierSection";
 
 /**
@@ -21,18 +22,19 @@ export function CommanderList() {
         <div className="pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
             <CategoryHeader />
 
-            {Object.entries(COMMANDER_DATABASE).map(([tierIdString, tierData]) => {
-                const tierId = parseInt(tierIdString);
-                const commanders = tierData[selectedCategory] || [];
+            {Object.values(COMMANDER_TIERS).map((tier) => {
+                const commandersInTier = COMMANDERS.filter(
+                    c => c.tier === tier.id && c.category === selectedCategory
+                );
 
-                if (commanders.length === 0) return null;
+                if (commandersInTier.length === 0) return null;
 
                 return (
                     <TierSection
-                        key={tierId}
-                        tierId={tierId}
+                        key={tier.id}
+                        tierId={tier.id}
                         category={selectedCategory}
-                        commanders={commanders}
+                        commanders={commandersInTier}
                     />
                 );
             })}
