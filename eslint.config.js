@@ -14,6 +14,13 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      {
+        rules: {
+          'no-unused-vars': 'off',
+        },
+      },
+      // Prettier must be last to override other rules
+      (await import('eslint-config-prettier')).default,
     ],
     languageOptions: {
       ecmaVersion: 2020,
