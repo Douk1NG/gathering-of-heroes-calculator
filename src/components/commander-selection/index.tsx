@@ -8,12 +8,12 @@ import { CommanderList } from "./CommanderList";
  */
 export function CommanderSelection() {
     return (
-        <Card className="border-white/5 bg-white/2">
-            <CardHeader>
+        <Card className="border-white/5 bg-white/2 h-full flex flex-col overflow-hidden">
+            <CardHeader className="shrink-0">
                 <CardTitle className="text-xl text-yellow-500">Target Selection</CardTitle>
                 <CardDescription>Select one or more commanders for your gathering plan</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="flex-1 min-h-0 flex flex-col space-y-6">
                 <CategoryTabs />
                 <CommanderList />
             </CardContent>

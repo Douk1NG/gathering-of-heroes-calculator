@@ -17,12 +17,12 @@ function App() {
             <div className="max-w-7xl mx-auto relative z-10 space-y-8">
                 <Header />
 
-                {/* Tier 1: Selection & List */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                    <div className="lg:col-span-2">
+                {/* Tier 1: Selection & List - Main Dashboard Frame */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch lg:h-200">
+                    <div className="lg:col-span-2 overflow-hidden">
                         <CommanderSelection />
                     </div>
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 overflow-hidden">
                         <CommandersList />
                     </div>
                 </div>

@@ -19,7 +19,7 @@ export function CommanderList() {
     }
 
     return (
-        <div className="pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
+        <div className="flex-1 min-h-0 overflow-y-auto pr-1 custom-scrollbar pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
             <CategoryHeader />
 
             {Object.values(COMMANDER_TIERS).map((tier) => {

@@ -1,4 +1,4 @@
-import { useCalculatorStore } from "@/store/use-calculator-store";
+import { useCommanderItems } from "@/hooks/use-commander-items";
 import { CommanderItem } from "./CommanderItem";
 
 /**
@@ -6,10 +6,10 @@ import { CommanderItem } from "./CommanderItem";
  * Only re-renders when the commanders array reference changes
  */
 export function CommanderItems() {
-    const selectedCommanders = useCalculatorStore(state => state.selectedCommanders);
+    const { selectedCommanders } = useCommanderItems();
 
     return (
-        <div className="flex-1 space-y-2 overflow-y-auto pr-1 custom-scrollbar max-h-[60vh]">
+        <div className="flex-1 min-h-0 space-y-2 overflow-y-auto pr-1 custom-scrollbar">
             {selectedCommanders.length > 0 ? (
                 selectedCommanders.map((commander) => (
                     <CommanderItem key={commander.name} commander={commander} />
