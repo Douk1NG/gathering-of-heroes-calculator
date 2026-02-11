@@ -2,6 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ChallengeMissionButton } from '@/components/missions-grid/ChallengeMissionButton';
 import { useCalculatorStore } from '@/store/use-calculator-store';
+import { t } from '@/lib/utils';
+import { T } from '@/translations';
 
 describe('ChallengeMissionButton Component', () => {
     beforeEach(() => {
@@ -34,7 +36,7 @@ describe('ChallengeMissionButton Component', () => {
             />
         );
         expect(screen.getByText('Log In 5 Days')).toBeInTheDocument();
-        expect(screen.getByText('+10 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+10 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 
     it('shows inactive state when mission is not completed', () => {

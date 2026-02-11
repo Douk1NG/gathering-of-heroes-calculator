@@ -1,0 +1,49 @@
+{
+    "daily": {
+        "title": "Daily",
+        "login": "Log In",
+        "barbs": "Defeat Barbarians (100)",
+        "gather": "Gather 2Million Resources",
+        "limit": "Limit: 5 Days",
+        "assumed": "Assumed: 5 Days",
+        "perDay": "/ Day",
+        "totalSuffix": "Total",
+        "yield": "Daily Yield"
+    },
+    "challenge": {
+        "title": "Challenge",
+        "login5": "Log In 5 Days",
+        "gems10k": "Spend 10k Gems",
+        "gems50k": "Spend 50k Gems",
+        "troop_power": "Increase Troop Power (600k)",
+        "rewards": "Milestone Rewards",
+        "total": "Milestone Total"
+    },
+    "repeatable": {
+        "title": "Repeatable",
+        "gems2k": "Spend 2k Gems",
+        "speedups": "Use 480m Speedups",
+        "yields": "Spending Yields",
+        "total": "Spending Result"
+    },
+    "speedupCalculator": {
+        "title": "Training Calculator",
+        "total": "Total Time",
+        "calculate": "Calculate",
+        "useResults": "Use results below",
+        "calculatedAddition": "Calculated Addition",
+        "ratio": "2 Per 480m",
+        "manualTitle": "Speedup Volume (min)",
+        "totalPackaged": "Total Packaged",
+        "yield": "Volume Yield",
+        "accumulatorNote": "Added to accumulator ({total}m total)",
+        "manualPlaceholder": "EX: 138d 21:20:00"
+    },
+    "gemsCalculator": {
+        "title": "Total Gems Spent",
+        "available": "Available Gems",
+        "placeholder": "Total Gems to spend...",
+        "ratio": "30 Per 2k",
+        "yield": "Volume Yield"
+    }
+}

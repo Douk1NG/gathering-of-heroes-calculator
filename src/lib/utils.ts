@@ -2,6 +2,34 @@ export const LAST_UPDATED = "Feb 05, 2026";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { en, type TranslationKey } from "@/translations";
+
+export function t(path: TranslationKey, params?: Record<string, string | number>): string {
+    const keys = (path as string).split('.');
+    let value: unknown = en;
+
+    for (const key of keys) {
+        if (value && typeof value === 'object') {
+            value = (value as Record<string, unknown>)[key];
+        } else {
+            value = undefined;
+            break;
+        }
+    }
+
+    if (!value || typeof value !== 'string') return path;
+
+    if (params) {
+        let result = value;
+        Object.entries(params).forEach(([k, v]) => {
+            result = result.replace(`{${k}}`, String(v));
+        });
+        return result;
+    }
+
+    return value;
+}
+
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }

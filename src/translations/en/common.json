@@ -1,0 +1,25 @@
+{
+    "tiers": {
+        "1": "Tier 1",
+        "2": "Tier 2",
+        "3": "Tier 3",
+        "4": "Tier 4",
+        "5": "Tier 5"
+    },
+    "categories": {
+        "Infantry": "Infantry",
+        "Cavalry": "Cavalry",
+        "Archer": "Archer",
+        "Leadership": "Leadership",
+        "Integration": "Integration",
+        "Engineering": "Engineering"
+    },
+    "speedupCategories": {
+        "building": "Building",
+        "research": "Research",
+        "training": "Training",
+        "healing": "Healing",
+        "universal": "Universal"
+    },
+    "tierUnlockRequirement": "Spend {amount} more {tokens} on Tier {tiers}"
+}

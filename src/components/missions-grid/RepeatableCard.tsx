@@ -3,6 +3,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { GemsInput } from "./GemsInput";
 import { SpeedupInputs } from "./SpeedupInputs";
 import { RepeatableTotal } from "./RepeatableTotal";
+import { t } from "@/lib/utils";
+import { T } from "@/translations";
 
 /**
  * RepeatableCard - Repeatable missions card for gem and speedup spending
@@ -17,8 +19,8 @@ export function RepeatableCard() {
                         <Swords className="w-5 h-5 text-red-400" />
                     </div>
                     <div>
-                        <CardTitle className="text-lg text-white">Repeatable</CardTitle>
-                        <CardDescription>Spending Yields</CardDescription>
+                        <CardTitle className="text-lg text-white">{t(T.missionsGrid.repeatable.title)}</CardTitle>
+                        <CardDescription>{t(T.missionsGrid.repeatable.yields)}</CardDescription>
                     </div>
                 </div>
             </CardHeader>

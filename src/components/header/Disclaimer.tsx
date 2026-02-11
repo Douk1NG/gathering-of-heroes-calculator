@@ -1,5 +1,6 @@
 import { Info, Clock } from "lucide-react";
-import { LAST_UPDATED } from "@/lib/utils";
+import { LAST_UPDATED, t } from "@/lib/utils";
+import { T } from "@/translations";
 
 export function Disclaimer() {
     return (
@@ -7,13 +8,12 @@ export function Disclaimer() {
             <div className="flex items-center gap-3">
                 <Info className="w-4 h-4 shrink-0" />
                 <p>
-                    This is a fan-made tool to help the community. It is not an official tool;
-                    data may not be 100% precise due to constant game updates.
+                    {t(T.header.disclaimer)}
                 </p>
             </div>
             <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-yellow-500/10 border border-yellow-500/20 whitespace-nowrap self-start md:self-auto">
                 <Clock className="w-3 h-3" />
-                <span>Last Updated: {LAST_UPDATED}</span>
+                <span>{t(T.header.lastUpdated)}: {LAST_UPDATED}</span>
             </div>
         </div>
     );

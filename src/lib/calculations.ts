@@ -1,5 +1,7 @@
 import { CHALLENGE_MISSIONS, COMMANDER_TIERS } from "./constants";
 import { type MissionState, type SelectedCommander, type SpeedupInputMode } from "./types";
+import { t } from "./utils";
+import { T } from "@/translations";
 
 export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto'): number {
     if (!timeStr) return 0;
@@ -175,5 +177,9 @@ export function getTierUnlockRequirement(selectedCommanders: SelectedCommander[]
     const difference = requiredLowerSpend - actualLowerSpend;
     const lowerTiersString = Array.from({ length: tierId - 1 }, (_, i) => (i + 1)).join(' & ');
 
-    return `Spend ${difference} more tokens on Tier ${lowerTiersString}`;
+    return t(T.common.tierUnlockRequirement, {
+        amount: difference,
+        tokens: t(T.commandersList.tokens),
+        tiers: lowerTiersString
+    });
 }

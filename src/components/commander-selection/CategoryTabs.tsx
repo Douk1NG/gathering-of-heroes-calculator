@@ -1,8 +1,9 @@
 import { Sword, BowArrow, ChessKnight, Flag, Settings } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { cn } from "@/lib/utils";
-import { COMMANDER_CATEGORIES } from "@/lib/constants";
+import { cn, t } from "@/lib/utils";
+import { T } from "@/translations";
+import { COMMANDER_CATEGORIES, type CommanderCategory } from "@/lib/constants";
 
 /**
  * Maps each commander category to its corresponding icon
@@ -30,7 +31,7 @@ export function CategoryTabs() {
     );
 }
 
-function CategoryTab({ category }: { category: string }) {
+function CategoryTab({ category }: { category: CommanderCategory }) {
     const {
         selectedCategory,
         setSelectedCategory
@@ -43,7 +44,7 @@ function CategoryTab({ category }: { category: string }) {
 
     return (
         <button
-            onClick={() => setSelectedCategory(category as any)}
+            onClick={() => setSelectedCategory(category)}
             className={cn(
                 "flex flex-col items-center gap-2 p-3 rounded-lg border transition-all truncate",
                 isActive
@@ -52,7 +53,7 @@ function CategoryTab({ category }: { category: string }) {
             )}
         >
             {CATEGORY_ICONS[category]}
-            <span className="text-[10px] font-bold uppercase tracking-wider">{category}</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">{t(T.common.categories[category as keyof typeof T.common.categories])}</span>
         </button>
     );
 }

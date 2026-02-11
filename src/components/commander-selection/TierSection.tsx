@@ -1,7 +1,8 @@
 import { Lock } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { cn } from "@/lib/utils";
+import { cn, t } from "@/lib/utils";
+import { T } from "@/translations";
 import { type CommanderCategory } from "@/lib/constants";
 import { type CommanderData } from "@/lib/types";
 import { CommanderButton } from "./CommanderButton";
@@ -31,7 +32,7 @@ export function TierSection({ tierId, category, commanders }: TierSectionProps) 
                 <div className="flex items-center gap-1.5 px-1.5 py-0.5 rounded bg-white/10">
                     {!isUnlocked && <Lock className="w-2.5 h-2.5 text-yellow-500/60" />}
                     <span className="text-[10px] font-black text-white/40 uppercase tracking-tighter">
-                        Tier {tierId}
+                        {t(T.common.tiers[tierId as keyof typeof T.common.tiers])}
                     </span>
                 </div>
                 <div className="h-px flex-1 bg-white/5" />

@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useCalculatorStore } from '@/store/use-calculator-store';
 import { COMMANDER_TIERS } from '@/lib/constants';
+import { t } from '@/lib/utils';
+import { T } from '@/translations';
 
 describe('useCalculatorStore - Target Selection', () => {
     beforeEach(() => {
@@ -131,13 +133,13 @@ describe('useCalculatorStore - Target Selection', () => {
         expect(getTierUnlockRequirement(1)).toBeNull();
 
         // Tier 2 missing 400
-        expect(getTierUnlockRequirement(2)).toBe('Spend 400 more tokens on Tier 1');
+        expect(getTierUnlockRequirement(2)).toBe(t(T.common.tierUnlockRequirement, { amount: 400, tokens: t(T.commandersList.tokens), tiers: '1' }));
 
         // Add 200 to Tier 1
         toggleCommander('Bai Qi', 'Infantry', 1);
-        expect(getTierUnlockRequirement(2)).toBe('Spend 200 more tokens on Tier 1');
+        expect(getTierUnlockRequirement(2)).toBe(t(T.common.tierUnlockRequirement, { amount: 200, tokens: t(T.commandersList.tokens), tiers: '1' }));
 
         // Tier 3 missing 1400 - 200 = 1200
-        expect(getTierUnlockRequirement(3)).toBe('Spend 1200 more tokens on Tier 1 & 2');
+        expect(getTierUnlockRequirement(3)).toBe(t(T.common.tierUnlockRequirement, { amount: 1200, tokens: t(T.commandersList.tokens), tiers: '1 & 2' }));
     });
 });

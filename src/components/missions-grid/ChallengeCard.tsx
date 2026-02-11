@@ -4,6 +4,8 @@ import { CHALLENGE_MISSIONS } from "@/lib/constants";
 import { ChallengeMissionButton } from "./ChallengeMissionButton";
 import { SpeedupCalculator } from "./SpeedupCalculator";
 import { ChallengeTotal } from "./ChallengeTotal";
+import { t } from "@/lib/utils";
+import { T } from "@/translations";
 
 /**
  * ChallengeCard - Challenge missions card
@@ -18,8 +20,8 @@ export function ChallengeCard() {
                         <Trophy className="w-5 h-5 text-yellow-400" />
                     </div>
                     <div>
-                        <CardTitle className="text-lg text-white">Challenge</CardTitle>
-                        <CardDescription>Milestone Rewards</CardDescription>
+                        <CardTitle className="text-lg text-white">{t(T.missionsGrid.challenge.title)}</CardTitle>
+                        <CardDescription>{t(T.missionsGrid.challenge.rewards)}</CardDescription>
                     </div>
                 </div>
             </CardHeader>
@@ -28,7 +30,7 @@ export function ChallengeCard() {
                     <div key={m.id} className="space-y-2">
                         <ChallengeMissionButton
                             missionId={m.id}
-                            name={m.name}
+                            name={t(T.missionsGrid.challenge[m.id as keyof typeof T.missionsGrid.challenge])}
                             tokens={m.tokens}
                         />
                         {m.id === 'troop_power' && <SpeedupCalculator />}

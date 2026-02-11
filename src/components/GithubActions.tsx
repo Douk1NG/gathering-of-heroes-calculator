@@ -1,6 +1,8 @@
 import { Star, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGithubActions } from "@/hooks/use-github-actions";
+import { t } from "@/lib/utils";
+import { T } from "@/translations";
 
 export function GithubActions() {
     const { handleOpenGithub } = useGithubActions();
@@ -12,7 +14,7 @@ export function GithubActions() {
                     <Github className="w-5 h-5 text-yellow-500" />
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-white">aLxVa on GitHub</p>
+                    <p className="text-sm font-bold text-white">{t(T.githubActions.githubUser)}</p>
                 </div>
             </div>
 
@@ -23,7 +25,7 @@ export function GithubActions() {
                     onClick={handleOpenGithub}
                 >
                     <Star className="w-4 h-4 mr-2 group-hover:fill-current" />
-                    Star
+                    {t(T.githubActions.star)}
                 </Button>
             </div>
         </div>

@@ -2,6 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GemsInput } from '@/components/missions-grid/GemsInput';
 import { useCalculatorStore } from '@/store/use-calculator-store';
+import { t } from '@/lib/utils';
+import { T } from '@/translations';
 
 describe('GemsInput Component', () => {
     beforeEach(() => {
@@ -27,14 +29,14 @@ describe('GemsInput Component', () => {
 
     it('renders gem input with correct labels', () => {
         render(<GemsInput />);
-        expect(screen.getByText('Total Gems Spent')).toBeInTheDocument();
-        expect(screen.getByText('30 Per 2k')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Total Gems to spend...')).toBeInTheDocument();
+        expect(screen.getByText(t(T.missionsGrid.gemsCalculator.title))).toBeInTheDocument();
+        expect(screen.getByText(t(T.missionsGrid.gemsCalculator.ratio))).toBeInTheDocument();
+        expect(screen.getByPlaceholderText(t(T.missionsGrid.gemsCalculator.placeholder))).toBeInTheDocument();
     });
 
     it('updates store when gems value changes', () => {
         render(<GemsInput />);
-        const input = screen.getByPlaceholderText('Total Gems to spend...') as HTMLInputElement;
+        const input = screen.getByPlaceholderText(t(T.missionsGrid.gemsCalculator.placeholder)) as HTMLInputElement;
 
         fireEvent.change(input, { target: { value: '5000' } });
         expect(useCalculatorStore.getState().missions.totalGemsSpent).toBe(5000);
@@ -42,7 +44,7 @@ describe('GemsInput Component', () => {
 
     it('does not show volume yield when gems is zero', () => {
         render(<GemsInput />);
-        expect(screen.queryByText('Volume Yield')).not.toBeInTheDocument();
+        expect(screen.queryByText(t(T.missionsGrid.gemsCalculator.yield))).not.toBeInTheDocument();
     });
 
     it('displays correct token calculation for 2000 gems', () => {
@@ -63,7 +65,7 @@ describe('GemsInput Component', () => {
         });
         render(<GemsInput />);
         // 2000 / 2000 = 1 * 30 = 30 tokens
-        expect(screen.getByText('+30 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+30 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 
     it('displays correct token calculation for 10000 gems', () => {
@@ -84,7 +86,7 @@ describe('GemsInput Component', () => {
         });
         render(<GemsInput />);
         // 10000 / 2000 = 5 * 30 = 150 tokens
-        expect(screen.getByText('+150 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+150 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 
     it('floors partial gem groups', () => {
@@ -105,6 +107,6 @@ describe('GemsInput Component', () => {
         });
         render(<GemsInput />);
         // 3999 / 2000 = 1.9995 -> floor to 1 * 30 = 30 tokens
-        expect(screen.getByText('+30 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+30 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 });

@@ -1,5 +1,7 @@
 import { Info } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { t } from "@/lib/utils";
+import { T } from "@/translations";
 
 export function TipsTricks() {
     return (
@@ -7,15 +9,15 @@ export function TipsTricks() {
             <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                     <Info className="w-4 h-4 text-yellow-500" />
-                    Tips & Tricks
+                    {t(T.tipsTricks.title)}
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm text-neutral-400 leading-relaxed">
                 <p>
-                    • Chain <span className="text-blue-400 font-medium">100 barbarians</span> to save Action Points (AP), regular daily AP is usually enough for this, however if you want to save ap bottles for this mission you can save up to <span className="text-blue-400 font-medium">15k  in AP bottles</span>
+                    {t(T.tipsTricks.tip1.part1)} <span className="text-blue-400 font-medium">{t(T.tipsTricks.tip1.part2)}</span> {t(T.tipsTricks.tip1.part3)} <span className="text-blue-400 font-medium">{t(T.tipsTricks.tip1.part4)}</span>
                 </p>
                 <p>
-                    • Consider the must have commanders <span className="text-blue-400 font-medium">Qin Shi Huang, Aquiles, Arthur, Bai Qi, Liu Che and Sun Tzu Prime</span>
+                    {t(T.tipsTricks.tip2.part1)} <span className="text-blue-400 font-medium">{t(T.tipsTricks.tip2.part2)}</span>
                 </p>
             </CardContent>
         </Card>

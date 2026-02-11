@@ -2,6 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SpeedupInputs } from '@/components/missions-grid/SpeedupInputs';
 import { useCalculatorStore } from '@/store/use-calculator-store';
+import { t } from '@/lib/utils';
+import { T } from '@/translations';
 
 describe('SpeedupInputs Component', () => {
     beforeEach(() => {
@@ -27,17 +29,16 @@ describe('SpeedupInputs Component', () => {
 
     it('renders all speedup category inputs', () => {
         render(<SpeedupInputs />);
-        expect(screen.getByText('building')).toBeInTheDocument();
-        expect(screen.getByText('research')).toBeInTheDocument();
-        expect(screen.getByText('training')).toBeInTheDocument();
-        expect(screen.getByText('healing')).toBeInTheDocument();
-        expect(screen.getByText('universal')).toBeInTheDocument();
+        const cats = ['building', 'research', 'training', 'healing', 'universal'];
+        cats.forEach(cat => {
+            expect(screen.getByText(t(T.common.speedupCategories[cat as keyof typeof T.common.speedupCategories]))).toBeInTheDocument();
+        });
     });
 
     it('displays speedup volume label and conversion rate', () => {
         render(<SpeedupInputs />);
-        expect(screen.getByText('Speedup Volume (min)')).toBeInTheDocument();
-        expect(screen.getByText('2 Per 480m')).toBeInTheDocument();
+        expect(screen.getByText(t(T.missionsGrid.speedupCalculator.manualTitle))).toBeInTheDocument();
+        expect(screen.getByText(t(T.missionsGrid.speedupCalculator.ratio))).toBeInTheDocument();
     });
 
     it('updates store when speedup value changes for a category', () => {
@@ -68,11 +69,12 @@ describe('SpeedupInputs Component', () => {
         render(<SpeedupInputs />);
         // 500 + 300 + 200 + 100 + 50 = 1150m
         expect(screen.getByText('1150m')).toBeInTheDocument();
+        expect(screen.getByText(t(T.missionsGrid.speedupCalculator.totalPackaged))).toBeInTheDocument();
     });
 
     it('does not show volume yield when total is zero', () => {
         render(<SpeedupInputs />);
-        expect(screen.queryByText('Volume Yield')).not.toBeInTheDocument();
+        expect(screen.queryByText(t(T.missionsGrid.speedupCalculator.yield))).not.toBeInTheDocument();
     });
 
     it('displays correct token calculation for 480 minutes', () => {
@@ -93,7 +95,7 @@ describe('SpeedupInputs Component', () => {
         });
         render(<SpeedupInputs />);
         // 480 / 480 = 1 * 2 = 2 tokens
-        expect(screen.getByText('+2 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+2 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 
     it('includes calculated speedup time in token calculation', () => {
@@ -117,6 +119,6 @@ describe('SpeedupInputs Component', () => {
         // Manual: 480, Calc: 1440 = 1920 total
         // 1920 / 480 = 4 * 2 = 8 tokens
         expect(screen.getByText('1920m')).toBeInTheDocument();
-        expect(screen.getByText('+8 Tokens')).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(`\\+8 ${t(T.commandersList.tokens)}`, 'i'))).toBeInTheDocument();
     });
 });

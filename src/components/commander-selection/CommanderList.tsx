@@ -1,7 +1,8 @@
 import { useCalculatorStore } from "@/store/use-calculator-store";
-import { COMMANDERS } from "@/lib/utils";
+import { COMMANDERS, t } from "@/lib/utils";
 import { COMMANDER_TIERS } from "@/lib/constants";
 import { TierSection } from "./TierSection";
+import { T } from "@/translations";
 
 /**
  * CommanderList - Displays all commanders for the selected category
@@ -13,7 +14,7 @@ export function CommanderList() {
     if (!selectedCategory) {
         return (
             <div className="py-8 text-center text-neutral-600 text-sm italic">
-                Select a category to view available commanders
+                {t(T.commanderSelection.placeholder)}
             </div>
         );
     }
@@ -47,7 +48,7 @@ function CategoryHeader() {
     return (
         <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
-            {selectedCategory} Commanders
+            {t(T.common.categories[selectedCategory as keyof typeof T.common.categories])} {t(T.commanderSelection.commandersHeader)}
         </h4>
     );
 }
