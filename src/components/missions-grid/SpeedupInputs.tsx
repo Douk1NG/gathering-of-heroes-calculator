@@ -47,17 +47,17 @@ export function SpeedupInputs() {
       </div>
 
       <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-        {Object.entries(speedupMinutes).map(([cat, val]) => (
-          <div key={cat} className="space-y-1">
+        {Object.entries(speedupMinutes).map(([category, value]) => (
+          <div key={category} className="space-y-1">
             <Label className="text-[9px] font-bold text-neutral-500 uppercase pl-1">
-              {t(T.common.speedupCategories[cat as keyof typeof T.common.speedupCategories])}
+              {t(T.common.speedupCategories[category as keyof typeof T.common.speedupCategories])}
             </Label>
             <Input
               type="text"
               className="h-8 bg-black/40 border-white/5 text-xs font-mono focus-visible:ring-blue-500/20"
-              value={getDisplayValue(val)}
+              value={getDisplayValue(value)}
               placeholder={speedupInputMode === 'days' ? '0d' : '0m'}
-              onChange={(e) => handleInputChange(cat, e.target.value)}
+              onChange={(e) => handleInputChange(category, e.target.value)}
             />
           </div>
         ))}

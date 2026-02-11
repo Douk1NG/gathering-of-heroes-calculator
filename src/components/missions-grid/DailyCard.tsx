@@ -1,11 +1,13 @@
 import { Target } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { DAILY_MISSIONS } from '@/lib/constants'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useDailyMissions } from '@/hooks/use-daily-missions'
 
 export function DailyCard() {
+  const { dailyMissions, totalDailyYield } = useDailyMissions()
+
   return (
     <Card className="flex flex-col border-white/5 bg-white/2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">
       <CardHeader className="bg-blue-500/5 pb-4 border-b border-white/5">
@@ -20,14 +22,14 @@ export function DailyCard() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4 pt-6 flex-1">
-        {DAILY_MISSIONS.map((m) => (
+        {dailyMissions.map((mission) => (
           <div
-            key={m.id}
+            key={mission.id}
             className="p-3 rounded-lg bg-black/20 border border-white/5 space-y-2 relative group overflow-hidden"
           >
             <div className="flex justify-between items-center">
               <Label className="text-sm font-bold text-neutral-300">
-                {t(T.missionsGrid.daily[m.id as keyof typeof T.missionsGrid.daily])}
+                {t(T.missionsGrid.daily[mission.id as keyof typeof T.missionsGrid.daily])}
               </Label>
               <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 uppercase tracking-tighter">
                 {t(T.missionsGrid.daily.assumed)}
@@ -35,13 +37,13 @@ export function DailyCard() {
             </div>
             <div className="flex justify-between items-end">
               <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">
-                {m.tokens} {t(T.commandersList.tokens)} {t(T.missionsGrid.daily.perDay)}
+                {mission.tokens} {t(T.commandersList.tokens)} {t(T.missionsGrid.daily.perDay)}
               </span>
               <span className="text-lg font-black text-white">
-                +{m.tokens * 5} {t(T.missionsGrid.daily.totalSuffix)}
+                +{mission.fiveDayTotal} {t(T.missionsGrid.daily.totalSuffix)}
               </span>
             </div>
-            {m.id === 'barbs' && (
+            {mission.id === 'barbs' && (
               <div className="absolute inset-0 bg-blue-500 border border-blue-400 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" />
             )}
           </div>
@@ -50,7 +52,9 @@ export function DailyCard() {
           <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
             {t(T.missionsGrid.daily.yield)}
           </span>
-          <span className="text-xl font-black text-blue-400">90 {t(T.commandersList.tokens)}</span>
+          <span className="text-xl font-black text-blue-400">
+            {totalDailyYield} {t(T.commandersList.tokens)}
+          </span>
         </div>
       </CardContent>
     </Card>

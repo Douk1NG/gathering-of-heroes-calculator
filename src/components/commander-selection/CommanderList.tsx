@@ -1,12 +1,11 @@
-import { useCalculatorStore } from '@/store/use-calculator-store'
-import { COMMANDERS, t } from '@/lib/utils'
-import { COMMANDER_TIERS } from '@/lib/constants'
 import { TierSection } from './TierSection'
 import { CategoryHeader } from './CategoryHeader'
+import { t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useCommanderList } from '@/hooks/use-commander-list'
 
 export function CommanderList() {
-  const selectedCategory = useCalculatorStore((state) => state.selectedCategory)
+  const { selectedCategory, tiers, getCommandersInTier } = useCommanderList()
 
   if (!selectedCategory) {
     return (
@@ -20,10 +19,8 @@ export function CommanderList() {
     <div className="flex-1 min-h-0 overflow-y-auto pr-1 custom-scrollbar pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
       <CategoryHeader />
 
-      {Object.values(COMMANDER_TIERS).map((tier) => {
-        const commandersInTier = COMMANDERS.filter(
-          (c) => c.tier === tier.id && c.category === selectedCategory,
-        )
+      {tiers.map((tier) => {
+        const commandersInTier = getCommandersInTier(tier.id)
 
         if (commandersInTier.length === 0) return null
 

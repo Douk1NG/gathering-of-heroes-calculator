@@ -4,6 +4,7 @@ import { useCalculatorStore } from '@/store/use-calculator-store'
 import { cn, t } from '@/lib/utils'
 import { T } from '@/translations'
 import { COMMANDER_CATEGORIES } from '@/lib/constants'
+import { type CategoryTabProps } from '@/types/components/commander-selection'
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   [COMMANDER_CATEGORIES.INFANTRY]: <Sword className="w-5 h-5" />,
@@ -12,8 +13,6 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   [COMMANDER_CATEGORIES.LEADERSHIP]: <Flag className="w-5 h-5" />,
   [COMMANDER_CATEGORIES.ENGINEERING]: <Settings className="w-5 h-5" />,
 }
-
-import { type CategoryTabProps } from '@/types/components/commander-selection'
 
 export function CategoryTabs() {
   return (
