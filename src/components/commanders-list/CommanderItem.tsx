@@ -1,7 +1,7 @@
 import { Trash2 } from 'lucide-react'
 import { CommanderAvatar } from '@/components/ui/commander-avatar'
-import { useCalculatorStore } from '@/store/use-calculator-store'
 import { type SelectedCommander } from '@/lib/utils'
+import { useCommanderItem } from '@/hooks/use-commander-item'
 
 interface CommanderItemProps {
   commander: SelectedCommander
@@ -9,11 +9,10 @@ interface CommanderItemProps {
 
 /**
  * CommanderItem - Individual commander card in the list
- * Shows commander details and allows removal
- * Only re-renders when this specific commander changes
+ * Logic extracted to useCommanderItem hook
  */
 export function CommanderItem({ commander }: CommanderItemProps) {
-  const toggleCommander = useCalculatorStore((state) => state.toggleCommander)
+  const { handleRemove } = useCommanderItem(commander)
 
   return (
     <div className="flex items-center justify-between p-3 rounded-lg bg-black/5 border border-black/10 group animate-in slide-in-from-right-4 duration-300">
@@ -28,8 +27,9 @@ export function CommanderItem({ commander }: CommanderItemProps) {
       </div>
       <div className="flex items-center gap-3">
         <button
-          onClick={() => toggleCommander(commander.name, commander.category, commander.tierId)}
+          onClick={handleRemove}
           className="p-1.5 rounded-md hover:bg-black/10 text-black/40 hover:text-black transition-colors"
+          aria-label={`Remove ${commander.name}`}
         >
           <Trash2 className="w-4 h-4" />
         </button>

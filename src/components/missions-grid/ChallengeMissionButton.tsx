@@ -1,7 +1,7 @@
 import { CheckCircle2 } from 'lucide-react'
-import { useCalculatorStore } from '@/store/use-calculator-store'
 import { cn, t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useChallengeMission } from '@/hooks/use-challenge-mission'
 
 interface ChallengeMissionButtonProps {
   missionId: string
@@ -11,15 +11,14 @@ interface ChallengeMissionButtonProps {
 
 /**
  * ChallengeMissionButton - Individual challenge mission toggle
- * Only re-renders when this specific mission's state changes
+ * Logic extracted to useChallengeMission hook
  */
 export function ChallengeMissionButton({ missionId, name, tokens }: ChallengeMissionButtonProps) {
-  const isCompleted = useCalculatorStore((state) => state.missions.challenge[missionId])
-  const updateChallenge = useCalculatorStore((state) => state.updateChallenge)
+  const { isCompleted, toggleStatus } = useChallengeMission(missionId)
 
   return (
     <button
-      onClick={() => updateChallenge(missionId, isCompleted ? 0 : 1)}
+      onClick={toggleStatus}
       className={cn(
         'w-full flex items-center justify-between p-3 rounded-lg border transition-all text-left group',
         isCompleted

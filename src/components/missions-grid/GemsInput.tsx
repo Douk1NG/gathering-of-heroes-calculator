@@ -1,19 +1,16 @@
 import { Coins } from 'lucide-react'
-import { useCalculatorStore } from '@/store/use-calculator-store'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useGemsInput } from '@/hooks/use-gems-input'
 
 /**
  * GemsInput - Gem spending input and calculation
- * Only re-renders when totalGemsSpent changes
+ * Logic extracted to useGemsInput hook
  */
 export function GemsInput() {
-  const totalGemsSpent = useCalculatorStore((state) => state.missions.totalGemsSpent)
-  const updateGemsSpent = useCalculatorStore((state) => state.updateGemsSpent)
-
-  const gemSpendTokens = Math.floor(totalGemsSpent / 2000) * 30
+  const { gemSpendTokens, handleInputChange, displayValue } = useGemsInput()
 
   return (
     <div className="space-y-2">
@@ -30,14 +27,9 @@ export function GemsInput() {
         <Input
           type="text"
           className="h-10 pl-10 bg-black/40 border-white/5 text-sm font-mono focus-visible:ring-yellow-500/20"
-          value={totalGemsSpent ? new Intl.NumberFormat('de-DE').format(totalGemsSpent) : ''}
+          value={displayValue}
           placeholder={t(T.missionsGrid.gemsCalculator.placeholder)}
-          onChange={(e) => {
-            const rawValue = e.target.value.replace(/\./g, '')
-            if (/^\d*$/.test(rawValue)) {
-              updateGemsSpent(parseInt(rawValue) || 0)
-            }
-          }}
+          onChange={(e) => handleInputChange(e.target.value)}
         />
       </div>
       {gemSpendTokens > 0 && (

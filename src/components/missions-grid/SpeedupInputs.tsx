@@ -1,35 +1,24 @@
-import { useCalculatorStore } from '@/store/use-calculator-store'
-import { parseSpeedupTime, t } from '@/lib/utils'
+import { t } from '@/lib/utils'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { T } from '@/translations'
-import type { MissionState } from '@/lib/types'
+import { useSpeedupInputs } from '@/hooks/use-speedup-inputs'
 
 /**
  * SpeedupInputs - Manual speedup minutes input grid
- * Only re-renders when speedupMinutes changes
+ * Logic extracted to useSpeedupInputs hook for better maintainability
  */
 export function SpeedupInputs() {
-  const speedupMinutes = useCalculatorStore((state) => state.missions.speedupMinutes)
-  const updateSpeedupMinutes = useCalculatorStore((state) => state.updateSpeedupMinutes)
-  const getSpeedupMinutes = useCalculatorStore((state) => state.getSpeedupMinutes)
-  const speedupInputMode = useCalculatorStore((state) => state.speedupInputMode)
-  const setSpeedupInputMode = useCalculatorStore((state) => state.setSpeedupInputMode)
-
-  // Helper to format display value based on mode
-  const getDisplayValue = (val: number) => {
-    if (!val) return ''
-    if (speedupInputMode === 'days') {
-      const days = val / 1440
-      // Show up to 2 decimal places if needed, otherwise integer
-      return days % 1 === 0 ? days.toString() : days.toFixed(2)
-    }
-    return val.toString()
-  }
-
-  const manualSpeedupMinutes = Object.values(speedupMinutes).reduce((a, b) => a + b, 0)
-  const calcMinutes = getSpeedupMinutes()
-  const totalSpeedupTokens = Math.floor((manualSpeedupMinutes + calcMinutes) / 480) * 2
+  const {
+    speedupMinutes,
+    speedupInputMode,
+    setSpeedupInputMode,
+    manualSpeedupMinutes,
+    calcMinutes,
+    totalSpeedupTokens,
+    handleInputChange,
+    getDisplayValue,
+  } = useSpeedupInputs()
 
   return (
     <div className="space-y-3 pt-2">
@@ -72,11 +61,7 @@ export function SpeedupInputs() {
               className="h-8 bg-black/40 border-white/5 text-xs font-mono focus-visible:ring-blue-500/20"
               value={getDisplayValue(val)}
               placeholder={speedupInputMode === 'days' ? '0d' : '0m'}
-              onChange={(e) => {
-                // Calculate new minutes based on Input + Mode
-                const newVal = parseSpeedupTime(e.target.value, speedupInputMode)
-                updateSpeedupMinutes(cat as keyof MissionState['speedupMinutes'], newVal)
-              }}
+              onChange={(e) => handleInputChange(cat, e.target.value)}
             />
           </div>
         ))}

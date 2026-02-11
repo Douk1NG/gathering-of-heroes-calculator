@@ -51,6 +51,16 @@ export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto
   return totalMinutes
 }
 
+export function formatSpeedupValue(val: number, mode: SpeedupInputMode): string {
+  if (val === null || val === undefined) return ''
+  if (mode === 'days') {
+    const days = val / 1440
+    // Show up to 2 decimal places if needed, otherwise integer
+    return days % 1 === 0 ? days.toString() : days.toFixed(2)
+  }
+  return val.toString()
+}
+
 // --- Pure Calculation Functions ---
 
 export function calculateSpeedupTokens(

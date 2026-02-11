@@ -42,9 +42,45 @@ export function getCommanderImageSrc(name: string): string {
   return `${baseUrl}commanders/${slug}.png`
 }
 
-export * from './types'
-export * from './calculations'
-export * from './data/commanders'
+export function formatGemValue(val: number): string {
+  // Fix: Strictly check for null/undefined to allow 0 to be formatted correctly
+  if (val === null || val === undefined) return ''
+
+  // Use browser locale if available, fallback to de-DE for dot-separators if needed
+  const locale = typeof navigator !== 'undefined' ? navigator.language : 'de-DE'
+  return new Intl.NumberFormat(locale).format(val)
+}
+
+export function parseGemValue(val: string): number {
+  // Support both dot and comma as thousands separators for safety
+  const rawValue = val.replace(/[.,]/g, '')
+  if (/^\d*$/.test(rawValue)) {
+    return parseInt(rawValue) || 0
+  }
+  return 0
+}
+
+// Explicit Exports (Replacing dangerous Barrel File 'export *')
+// This prevents circular dependencies and name collisions, and improves tree-shaking
+export {
+  type SpeedupInputMode,
+  type MissionState,
+  type SelectedCommander,
+  type CommanderData,
+} from './types'
+
+export {
+  parseSpeedupTime,
+  formatSpeedupValue,
+  calculateSpeedupTokens,
+  calculateTotalTokens,
+  calculateTotalCost,
+  checkUnlockStatus,
+  checkTierUnlock,
+  getTierUnlockRequirement,
+} from './calculations'
+
+export { COMMANDERS } from './data/commanders'
 
 export {
   COMMANDER_TIERS,

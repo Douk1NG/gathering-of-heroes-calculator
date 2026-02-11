@@ -1,18 +1,13 @@
-import { useCalculatorStore } from '@/store/use-calculator-store'
-import { CHALLENGE_MISSIONS } from '@/lib/constants'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useChallengeTotal } from '@/hooks/use-challenge-total'
 
 /**
  * ChallengeTotal - Displays total tokens from challenge missions
- * Only re-renders when challenge missions change
+ * Logic extracted to useChallengeTotal hook
  */
 export function ChallengeTotal() {
-  const challengeMissions = useCalculatorStore((state) => state.missions.challenge)
-
-  const challengeTotal = CHALLENGE_MISSIONS.reduce((acc, m) => {
-    return acc + (challengeMissions[m.id] ? m.tokens : 0)
-  }, 0)
+  const { challengeTotal } = useChallengeTotal()
 
   return (
     <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center">

@@ -1,20 +1,16 @@
 import { Zap } from 'lucide-react'
-import { useCalculatorStore } from '@/store/use-calculator-store'
 import { Input } from '@/components/ui/input'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
+import { useSpeedupCalculator } from '@/hooks/use-speedup-calculator'
 
 /**
  * SpeedupCalculator - Training speedup time calculator
- * Only re-renders when speedupTimeStr changes
+ * Logic extracted to useSpeedupCalculator hook
  */
 export function SpeedupCalculator() {
-  const speedupTimeStr = useCalculatorStore((state) => state.speedupTimeStr)
-  const updateSpeedupTime = useCalculatorStore((state) => state.updateSpeedupTime)
-  const getSpeedupMinutes = useCalculatorStore((state) => state.getSpeedupMinutes)
-
-  const calculatedMinutes = getSpeedupMinutes()
-  const calculatedTokens = Math.floor(calculatedMinutes / 480) * 2
+  const { speedupTimeStr, updateSpeedupTime, calculatedMinutes, calculatedTokens } =
+    useSpeedupCalculator()
 
   return (
     <div className="p-4 rounded-lg bg-black/40 border border-blue-500/20 space-y-4 mt-1 shadow-inner group/calc">
