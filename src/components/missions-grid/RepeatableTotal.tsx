@@ -2,10 +2,6 @@ import { t } from '@/lib/utils'
 import { T } from '@/translations'
 import { useRepeatableTotal } from '@/hooks/use-repeatable-total'
 
-/**
- * RepeatableTotal - Displays total tokens from repeatable missions
- * Logic extracted to useRepeatableTotal hook
- */
 export function RepeatableTotal() {
   const { repeatableTotal } = useRepeatableTotal()
 

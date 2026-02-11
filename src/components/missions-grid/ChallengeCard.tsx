@@ -7,10 +7,6 @@ import { ChallengeTotal } from './ChallengeTotal'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
 
-/**
- * ChallengeCard - Challenge missions card
- * Optimized: Each mission button and calculator are separate components
- */
 export function ChallengeCard() {
   return (
     <Card className="flex flex-col border-white/5 bg-white/2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">

@@ -1,10 +1,6 @@
 import { useCommanderItems } from '@/hooks/use-commander-items'
 import { CommanderItem } from './CommanderItem'
 
-/**
- * CommanderItems - Container for the list of selected commanders
- * Only re-renders when the commanders array reference changes
- */
 export function CommanderItems() {
   const { selectedCommanders } = useCommanderItems()
 

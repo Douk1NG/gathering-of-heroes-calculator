@@ -1,16 +1,8 @@
 import { Trash2 } from 'lucide-react'
 import { CommanderAvatar } from '@/components/ui/commander-avatar'
-import { type SelectedCommander } from '@/lib/utils'
 import { useCommanderItem } from '@/hooks/use-commander-item'
+import { type CommanderItemProps } from '@/types/components/commanders-list'
 
-interface CommanderItemProps {
-  commander: SelectedCommander
-}
-
-/**
- * CommanderItem - Individual commander card in the list
- * Logic extracted to useCommanderItem hook
- */
 export function CommanderItem({ commander }: CommanderItemProps) {
   const { handleRemove } = useCommanderItem(commander)
 

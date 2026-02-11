@@ -3,11 +3,8 @@ import { useShallow } from 'zustand/react/shallow'
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { cn, t } from '@/lib/utils'
 import { T } from '@/translations'
-import { COMMANDER_CATEGORIES, type CommanderCategory } from '@/lib/constants'
+import { COMMANDER_CATEGORIES } from '@/lib/constants'
 
-/**
- * Maps each commander category to its corresponding icon
- */
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   [COMMANDER_CATEGORIES.INFANTRY]: <Sword className="w-5 h-5" />,
   [COMMANDER_CATEGORIES.ARCHER]: <BowArrow className="w-5 h-5" />,
@@ -16,22 +13,19 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   [COMMANDER_CATEGORIES.ENGINEERING]: <Settings className="w-5 h-5" />,
 }
 
-/**
- * CategoryTabs - Displays category selection tabs for filtering commanders
- * Users can switch between Infantry, Archer, Cavalry, Leadership, and Engineering
- * Optimized: Each tab is a separate component that only re-renders when selection changes
- */
+import { type CategoryTabProps } from '@/types/components/commander-selection'
+
 export function CategoryTabs() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-      {Object.values(COMMANDER_CATEGORIES).map((cat) => (
-        <CategoryTab key={cat} category={cat} />
+      {Object.values(COMMANDER_CATEGORIES).map((category) => (
+        <CategoryTab key={category} category={category} />
       ))}
     </div>
   )
 }
 
-function CategoryTab({ category }: { category: CommanderCategory }) {
+function CategoryTab({ category }: CategoryTabProps) {
   const { selectedCategory, setSelectedCategory } = useCalculatorStore(
     useShallow((state) => ({
       selectedCategory: state.selectedCategory,

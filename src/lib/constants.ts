@@ -19,8 +19,6 @@ export const COMMANDER_TIERS = {
   },
 } as const
 
-export type CommanderTier = (typeof COMMANDER_TIERS)[keyof typeof COMMANDER_TIERS]
-
 export const MISSION_TYPES = {
   DAILY: 'Daily Missions',
   CHALLENGE: 'Challenge Missions',
@@ -54,5 +52,3 @@ export const COMMANDER_CATEGORIES = {
   LEADERSHIP: 'Leadership',
   ENGINEERING: 'Engineering',
 } as const
-
-export type CommanderCategory = (typeof COMMANDER_CATEGORIES)[keyof typeof COMMANDER_CATEGORIES]

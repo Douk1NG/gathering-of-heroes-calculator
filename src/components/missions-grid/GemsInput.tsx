@@ -5,10 +5,6 @@ import { t } from '@/lib/utils'
 import { T } from '@/translations'
 import { useGemsInput } from '@/hooks/use-gems-input'
 
-/**
- * GemsInput - Gem spending input and calculation
- * Logic extracted to useGemsInput hook
- */
 export function GemsInput() {
   const { gemSpendTokens, handleInputChange, displayValue } = useGemsInput()
 

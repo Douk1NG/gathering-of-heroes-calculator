@@ -2,10 +2,6 @@ import { t } from '@/lib/utils'
 import { T } from '@/translations'
 import { useChallengeTotal } from '@/hooks/use-challenge-total'
 
-/**
- * ChallengeTotal - Displays total tokens from challenge missions
- * Logic extracted to useChallengeTotal hook
- */
 export function ChallengeTotal() {
   const { challengeTotal } = useChallengeTotal()
 

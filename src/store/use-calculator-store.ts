@@ -2,9 +2,6 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
   parseSpeedupTime,
-  type SpeedupInputMode,
-  type MissionState,
-  type SelectedCommander,
   calculateSpeedupTokens,
   calculateTotalTokens,
   calculateTotalCost,
@@ -12,37 +9,8 @@ import {
   checkTierUnlock,
   getTierUnlockRequirement,
 } from '@/lib/utils'
-import { COMMANDER_TIERS, type CommanderCategory } from '@/lib/constants'
-
-interface CalculatorState {
-  selectedCommanders: SelectedCommander[]
-  missions: MissionState
-  selectedCategory: CommanderCategory | null
-  speedupTimeStr: string
-  speedupInputMode: SpeedupInputMode
-
-  // Actions
-  reset: () => void
-  toggleCommander: (name: string, category: CommanderCategory, tierId: number) => void
-  setSelectedCategory: (category: CommanderCategory | null) => void
-  setSpeedupInputMode: (mode: SpeedupInputMode) => void
-  updateDaily: () => void
-  updateChallenge: (id: string, value: number) => void
-  updateRepeatable: (id: string, value: number) => void
-  updateSpeedupMinutes: (category: keyof MissionState['speedupMinutes'], value: number) => void
-  updateGemsSpent: (value: number) => void
-  updateSpeedupTime: (timeStr: string) => void
-
-  // Selectors/Computed values
-  getTotalTokens: () => number
-  getTotalCost: () => number
-  getNeededTokens: () => number
-  getUnlockStatus: () => boolean
-  getProgress: () => number
-  getSpeedupMinutes: () => number
-  isTierUnlocked: (tierId: number) => boolean
-  getTierUnlockRequirement: (tierId: number) => string | null
-}
+import { COMMANDER_TIERS } from '@/lib/constants'
+import { type CalculatorState } from '@/types/store/calculator-store'
 
 export const useCalculatorStore = create<CalculatorState>()(
   persist(

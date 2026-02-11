@@ -3,10 +3,6 @@ import { CardHeader, CardTitle } from '@/components/ui/card'
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { t } from '@/lib/utils'
 
-/**
- * ListHeader - Displays the commanders list title and item count
- * Only re-renders when the commander count changes
- */
 export function ListHeader() {
   return (
     <CardHeader className="pb-2 shrink-0">

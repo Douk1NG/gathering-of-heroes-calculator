@@ -4,10 +4,6 @@ import { Input } from '@/components/ui/input'
 import { T } from '@/translations'
 import { useSpeedupInputs } from '@/hooks/use-speedup-inputs'
 
-/**
- * SpeedupInputs - Manual speedup minutes input grid
- * Logic extracted to useSpeedupInputs hook for better maintainability
- */
 export function SpeedupInputs() {
   const {
     speedupMinutes,

@@ -3,18 +3,8 @@ import { CommanderAvatar } from '@/components/ui/commander-avatar'
 import { useShallow } from 'zustand/react/shallow'
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { cn } from '@/lib/utils'
-import { type CommanderCategory } from '@/lib/constants'
+import { type CommanderButtonProps } from '@/types/components/commander-selection'
 
-interface CommanderButtonProps {
-  name: string
-  tierId: number
-  category: CommanderCategory
-}
-
-/**
- * CommanderButton - Individual commander selection button
- * Shows locked/unlocked state and selection status with visual feedback
- */
 export function CommanderButton({ name, tierId, category }: CommanderButtonProps) {
   const { isSelected, toggleCommander, isUnlocked } = useCalculatorStore(
     useShallow((state) => ({

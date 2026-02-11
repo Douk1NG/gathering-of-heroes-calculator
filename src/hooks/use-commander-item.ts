@@ -1,5 +1,5 @@
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { type SelectedCommander } from '@/lib/utils'
+import { type SelectedCommander } from '@/types/commander/commander'
 
 /**
  * useCommanderItem - Hook for managing an individual commander item in the list

@@ -6,10 +6,6 @@ import { RepeatableTotal } from './RepeatableTotal'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
 
-/**
- * RepeatableCard - Repeatable missions card for gem and speedup spending
- * Optimized: Each input section is a separate component
- */
 export function RepeatableCard() {
   return (
     <Card className="flex flex-col border-white/5 bg-white/2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">

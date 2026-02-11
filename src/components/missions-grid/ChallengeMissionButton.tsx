@@ -2,17 +2,8 @@ import { CheckCircle2 } from 'lucide-react'
 import { cn, t } from '@/lib/utils'
 import { T } from '@/translations'
 import { useChallengeMission } from '@/hooks/use-challenge-mission'
+import { type ChallengeMissionButtonProps } from '@/types/components/missions-grid'
 
-interface ChallengeMissionButtonProps {
-  missionId: string
-  name: string
-  tokens: number
-}
-
-/**
- * ChallengeMissionButton - Individual challenge mission toggle
- * Logic extracted to useChallengeMission hook
- */
 export function ChallengeMissionButton({ missionId, name, tokens }: ChallengeMissionButtonProps) {
   const { isCompleted, toggleStatus } = useChallengeMission(missionId)
 

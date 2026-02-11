@@ -1,6 +1,6 @@
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { formatSpeedupValue, parseSpeedupTime } from '@/lib/utils'
-import type { MissionState } from '@/lib/types'
+import { type MissionState } from '@/types/mission/mission'
 
 /**
  * useSpeedupInputs - Hook for managing speedup input values and modes

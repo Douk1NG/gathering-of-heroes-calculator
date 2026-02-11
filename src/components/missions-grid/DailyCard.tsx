@@ -5,10 +5,6 @@ import { DAILY_MISSIONS } from '@/lib/constants'
 import { t } from '@/lib/utils'
 import { T } from '@/translations'
 
-/**
- * DailyCard - Displays automated daily missions
- * Completely static component with no state subscriptions
- */
 export function DailyCard() {
   return (
     <Card className="flex flex-col border-white/5 bg-white/2 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">

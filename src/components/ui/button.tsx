@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { cn } from '../../lib/utils'
-
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'outline' | 'ghost' | 'gold'
-}
+import { type ButtonProps } from '@/types/components/ui'
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'default', ...props }, ref) => {

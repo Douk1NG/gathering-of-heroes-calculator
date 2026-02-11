@@ -1,5 +1,6 @@
 import { CHALLENGE_MISSIONS, COMMANDER_TIERS } from './constants'
-import { type MissionState, type SelectedCommander, type SpeedupInputMode } from './types'
+import { type SelectedCommander } from '@/types/commander/commander'
+import { type MissionState, type SpeedupInputMode } from '@/types/mission/mission'
 import { t } from './utils'
 import { T } from '@/translations'
 

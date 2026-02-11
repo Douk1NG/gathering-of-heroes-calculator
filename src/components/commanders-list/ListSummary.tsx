@@ -1,10 +1,6 @@
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { t } from '@/lib/utils'
 
-/**
- * ListSummary - Displays calculation summary and progress
- * Optimized: Each metric is a separate component that only re-renders when its value changes
- */
 export function ListSummary() {
   return (
     <div className="pt-4 border-t border-black/10 space-y-4 shrink-0 mt-auto">

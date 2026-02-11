@@ -1,12 +1,7 @@
 import { useState } from 'react'
 import { User } from 'lucide-react'
 import { cn, getCommanderImageSrc } from '@/lib/utils'
-
-interface CommanderAvatarProps {
-  name: string
-  className?: string
-  size?: 'sm' | 'md' | 'lg'
-}
+import { type CommanderAvatarProps } from '@/types/components/ui'
 
 const sizeClasses = {
   sm: 'w-8 h-8',
@@ -14,7 +9,6 @@ const sizeClasses = {
   lg: 'w-12 h-12',
 }
 
-// Global cache for failed images to prevent re-fetching on remount
 const failedImages = new Set<string>()
 
 export function CommanderAvatar({ name, className, size = 'md' }: CommanderAvatarProps) {

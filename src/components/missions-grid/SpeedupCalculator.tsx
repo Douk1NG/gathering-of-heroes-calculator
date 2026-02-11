@@ -4,10 +4,6 @@ import { t } from '@/lib/utils'
 import { T } from '@/translations'
 import { useSpeedupCalculator } from '@/hooks/use-speedup-calculator'
 
-/**
- * SpeedupCalculator - Training speedup time calculator
- * Logic extracted to useSpeedupCalculator hook
- */
 export function SpeedupCalculator() {
   const { speedupTimeStr, updateSpeedupTime, calculatedMinutes, calculatedTokens } =
     useSpeedupCalculator()

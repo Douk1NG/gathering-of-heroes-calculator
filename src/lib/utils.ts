@@ -2,15 +2,16 @@ export const LAST_UPDATED = 'Feb 05, 2026'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-import { en, type TranslationKey } from '@/translations'
+import { en } from '@/translations'
+import { type TranslationKey, type Translations } from '@/types/common/translations'
 
 export function t(path: TranslationKey, params?: Record<string, string | number>): string {
   const keys = (path as string).split('.')
-  let value: unknown = en
+  let value: Translations | string | undefined = en
 
   for (const key of keys) {
     if (value && typeof value === 'object') {
-      value = (value as Record<string, unknown>)[key]
+      value = (value as Record<string, string | object>)[key] as Translations | string | undefined
     } else {
       value = undefined
       break
@@ -62,12 +63,6 @@ export function parseGemValue(val: string): number {
 
 // Explicit Exports (Replacing dangerous Barrel File 'export *')
 // This prevents circular dependencies and name collisions, and improves tree-shaking
-export {
-  type SpeedupInputMode,
-  type MissionState,
-  type SelectedCommander,
-  type CommanderData,
-} from './types'
 
 export {
   parseSpeedupTime,
@@ -90,6 +85,4 @@ export {
   REPEATABLE_MISSIONS,
   EVENT_DURATION_DAYS,
   COMMANDER_CATEGORIES,
-  type CommanderTier,
-  type CommanderCategory,
 } from './constants'

@@ -3,20 +3,9 @@ import { useShallow } from 'zustand/react/shallow'
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { cn, t } from '@/lib/utils'
 import { T } from '@/translations'
-import { type CommanderCategory } from '@/lib/constants'
-import { type CommanderData } from '@/lib/types'
+import { type TierSectionProps } from '@/types/components/commander-selection'
 import { CommanderButton } from './CommanderButton'
 
-interface TierSectionProps {
-  tierId: number
-  category: CommanderCategory
-  commanders: CommanderData[]
-}
-
-/**
- * TierSection - Displays commanders grouped by tier
- * Shows tier lock status and unlock requirements
- */
 export function TierSection({ tierId, category, commanders }: TierSectionProps) {
   const { isUnlocked, lockReason } = useCalculatorStore(
     useShallow((state) => ({

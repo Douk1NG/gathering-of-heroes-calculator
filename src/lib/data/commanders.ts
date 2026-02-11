@@ -1,5 +1,5 @@
-import { COMMANDER_CATEGORIES } from '../constants'
-import { type CommanderData } from '../types'
+import { COMMANDER_CATEGORIES } from '@/lib/constants'
+import { type CommanderData } from '@/types/commander/commander'
 
 export const COMMANDERS: CommanderData[] = [
   // Tier 1
