@@ -1,9 +1,9 @@
 {
-    "title": "Commanders List",
-    "items": "Items",
-    "totalTokensNeeded": "Total Tokens Needed",
-    "totalCost": "Total Cost",
-    "gathered": "Gathered",
-    "completion": "Completion",
-    "tokens": "Tokens"
+  "title": "Commanders List",
+  "items": "Items",
+  "totalTokensNeeded": "Total Tokens Needed",
+  "totalCost": "Total Cost",
+  "gathered": "Gathered",
+  "completion": "Completion",
+  "tokens": "Tokens"
 }
