@@ -1,8 +1,6 @@
 import { CHALLENGE_MISSIONS, COMMANDER_TIERS } from './constants'
 import { type SelectedCommander } from '@/types/commander/commander'
 import { type MissionState, type SpeedupInputMode } from '@/types/mission/mission'
-import { t } from './utils'
-import { T } from '@/translations'
 
 export function parseSpeedupTime(timeStr: string, mode: SpeedupInputMode = 'auto'): number {
   if (!timeStr) return 0
@@ -176,7 +174,7 @@ export function checkTierUnlock(selectedCommanders: SelectedCommander[], tierId:
 export function getTierUnlockRequirement(
   selectedCommanders: SelectedCommander[],
   tierId: number,
-): string | null {
+): { amount: number; tiers: string } | null {
   const tierKey = `TIER_${tierId}` as keyof typeof COMMANDER_TIERS
   const requiredLowerSpend = COMMANDER_TIERS[tierKey].minSpend
 
@@ -191,9 +189,5 @@ export function getTierUnlockRequirement(
   const difference = requiredLowerSpend - actualLowerSpend
   const lowerTiersString = Array.from({ length: tierId - 1 }, (_, i) => i + 1).join(' & ')
 
-  return t(T.common.tierUnlockRequirement, {
-    amount: difference,
-    tokens: t(T.commandersList.tokens),
-    tiers: lowerTiersString,
-  })
+  return { amount: difference, tiers: lowerTiersString }
 }

@@ -3,6 +3,8 @@ import { CommanderAvatar } from '@/components/ui/commander-avatar'
 import { useCommanderItem } from '@/hooks/use-commander-item'
 import { type CommanderItemProps } from '@/types/components/commanders-list'
 
+import { t, translations } from '@/lib/translations'
+
 export function CommanderItem({ commander }: CommanderItemProps) {
   const { handleRemove } = useCommanderItem(commander)
 
@@ -13,7 +15,8 @@ export function CommanderItem({ commander }: CommanderItemProps) {
         <div>
           <p className="font-bold text-sm text-white">{commander.name}</p>
           <p className="text-[10px] text-black font-mono">
-            TIER {commander.tierId} • {commander.cost} TOKENS
+            {t(translations.commandersList.item.tier)} {commander.tierId} • {commander.cost}{' '}
+            {t(translations.commandersList.item.tokens)}
           </p>
         </div>
       </div>

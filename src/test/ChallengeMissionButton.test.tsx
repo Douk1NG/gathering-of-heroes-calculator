@@ -2,8 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { ChallengeMissionButton } from '@/components/missions-grid/ChallengeMissionButton'
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
 
 describe('ChallengeMissionButton Component', () => {
   beforeEach(() => {
@@ -31,7 +30,7 @@ describe('ChallengeMissionButton Component', () => {
     render(<ChallengeMissionButton missionId="login5" name="Log In 5 Days" tokens={10} />)
     expect(screen.getByText('Log In 5 Days')).toBeInTheDocument()
     expect(
-      screen.getByText(new RegExp(`\\+10 ${t(T.commandersList.tokens)}`, 'i')),
+      screen.getByText(new RegExp(`\\+10 ${t(translations.commandersList.tokens)}`, 'i')),
     ).toBeInTheDocument()
   })
 

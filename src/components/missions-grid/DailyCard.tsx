@@ -1,8 +1,8 @@
 import { Target } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
+
 import { useDailyMissions } from '@/hooks/use-daily-missions'
 
 export function DailyCard() {
@@ -16,8 +16,10 @@ export function DailyCard() {
             <Target className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <CardTitle className="text-lg text-white">{t(T.missionsGrid.daily.title)}</CardTitle>
-            <CardDescription>{t(T.missionsGrid.daily.limit)}</CardDescription>
+            <CardTitle className="text-lg text-white">
+              {t(translations.missionsGrid.daily.title)}
+            </CardTitle>
+            <CardDescription>{t(translations.missionsGrid.daily.limit)}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -29,18 +31,19 @@ export function DailyCard() {
           >
             <div className="flex justify-between items-center">
               <Label className="text-sm font-bold text-neutral-300">
-                {t(T.missionsGrid.daily[mission.id as keyof typeof T.missionsGrid.daily])}
+                {t(translations.missionsGrid.daily[mission.id])}
               </Label>
               <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 uppercase tracking-tighter">
-                {t(T.missionsGrid.daily.assumed)}
+                {t(translations.missionsGrid.daily.assumed)}
               </span>
             </div>
             <div className="flex justify-between items-end">
               <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">
-                {mission.tokens} {t(T.commandersList.tokens)} {t(T.missionsGrid.daily.perDay)}
+                {mission.tokens} {t(translations.commandersList.tokens)}{' '}
+                {t(translations.missionsGrid.daily.perDay)}
               </span>
               <span className="text-lg font-black text-white">
-                +{mission.fiveDayTotal} {t(T.missionsGrid.daily.totalSuffix)}
+                +{mission.fiveDayTotal} {t(translations.missionsGrid.daily.totalSuffix)}
               </span>
             </div>
             {mission.id === 'barbs' && (
@@ -50,10 +53,10 @@ export function DailyCard() {
         ))}
         <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center">
           <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
-            {t(T.missionsGrid.daily.yield)}
+            {t(translations.missionsGrid.daily.yield)}
           </span>
           <span className="text-xl font-black text-blue-400">
-            {totalDailyYield} {t(T.commandersList.tokens)}
+            {totalDailyYield} {t(translations.commandersList.tokens)}
           </span>
         </div>
       </CardContent>

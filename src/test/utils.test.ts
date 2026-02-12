@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { parseSpeedupTime } from '@/lib/utils'
+import { parseSpeedupTime } from '@/lib/calculations'
 
 describe('parseSpeedupTime', () => {
   describe('Auto Mode', () => {

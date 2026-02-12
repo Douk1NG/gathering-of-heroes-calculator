@@ -1,8 +1,9 @@
 import { Sword, BowArrow, ChessKnight, Flag, Settings } from 'lucide-react'
 import { useShallow } from 'zustand/react/shallow'
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { cn, t } from '@/lib/utils'
-import { T } from '@/translations'
+import { cn } from '@/lib/utils'
+import { t, translations } from '@/lib/translations'
+
 import { COMMANDER_CATEGORIES } from '@/lib/constants'
 import { type CategoryTabProps } from '@/types/components/commander-selection'
 
@@ -46,7 +47,7 @@ function CategoryTab({ category }: CategoryTabProps) {
     >
       {CATEGORY_ICONS[category]}
       <span className="text-[10px] font-bold uppercase tracking-wider">
-        {t(T.common.categories[category as keyof typeof T.common.categories])}
+        {t(translations.common.categories[category])}
       </span>
     </button>
   )

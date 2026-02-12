@@ -3,8 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { GemsInput } from './GemsInput'
 import { SpeedupInputs } from './SpeedupInputs'
 import { RepeatableTotal } from './RepeatableTotal'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
 
 export function RepeatableCard() {
   return (
@@ -16,9 +15,9 @@ export function RepeatableCard() {
           </div>
           <div>
             <CardTitle className="text-lg text-white">
-              {t(T.missionsGrid.repeatable.title)}
+              {t(translations.missionsGrid.repeatable.title)}
             </CardTitle>
-            <CardDescription>{t(T.missionsGrid.repeatable.yields)}</CardDescription>
+            <CardDescription>{t(translations.missionsGrid.repeatable.yields)}</CardDescription>
           </div>
         </div>
       </CardHeader>

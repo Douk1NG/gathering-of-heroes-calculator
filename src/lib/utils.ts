@@ -2,35 +2,6 @@ export const LAST_UPDATED = 'Feb 05, 2026'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-import { en } from '@/translations'
-import { type TranslationKey, type Translations } from '@/types/common/translations'
-
-export function t(path: TranslationKey, params?: Record<string, string | number>): string {
-  const keys = (path as string).split('.')
-  let value: Translations | string | undefined = en
-
-  for (const key of keys) {
-    if (value && typeof value === 'object') {
-      value = (value as Record<string, string | object>)[key] as Translations | string | undefined
-    } else {
-      value = undefined
-      break
-    }
-  }
-
-  if (!value || typeof value !== 'string') return path
-
-  if (params) {
-    let result = value
-    Object.entries(params).forEach(([k, v]) => {
-      result = result.replace(`{${k}}`, String(v))
-    })
-    return result
-  }
-
-  return value
-}
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -60,29 +31,3 @@ export function parseGemValue(val: string): number {
   }
   return 0
 }
-
-// Explicit Exports (Replacing dangerous Barrel File 'export *')
-// This prevents circular dependencies and name collisions, and improves tree-shaking
-
-export {
-  parseSpeedupTime,
-  formatSpeedupValue,
-  calculateSpeedupTokens,
-  calculateTotalTokens,
-  calculateTotalCost,
-  checkUnlockStatus,
-  checkTierUnlock,
-  getTierUnlockRequirement,
-} from './calculations'
-
-export { COMMANDERS } from './data/commanders'
-
-export {
-  COMMANDER_TIERS,
-  MISSION_TYPES,
-  DAILY_MISSIONS,
-  CHALLENGE_MISSIONS,
-  REPEATABLE_MISSIONS,
-  EVENT_DURATION_DAYS,
-  COMMANDER_CATEGORIES,
-} from './constants'

@@ -1,5 +1,5 @@
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { formatSpeedupValue, parseSpeedupTime } from '@/lib/utils'
+import { formatSpeedupValue, parseSpeedupTime } from '@/lib/calculations'
 import { type MissionState } from '@/types/mission/mission'
 
 /**

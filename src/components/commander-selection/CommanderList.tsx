@@ -1,7 +1,7 @@
 import { TierSection } from './TierSection'
 import { CategoryHeader } from './CategoryHeader'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
+
 import { useCommanderList } from '@/hooks/use-commander-list'
 
 export function CommanderList() {
@@ -10,7 +10,7 @@ export function CommanderList() {
   if (!selectedCategory) {
     return (
       <div className="py-8 text-center text-neutral-600 text-sm italic">
-        {t(T.commanderSelection.placeholder)}
+        {t(translations.commanderSelection.placeholder)}
       </div>
     )
   }

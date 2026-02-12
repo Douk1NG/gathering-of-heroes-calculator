@@ -1,8 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useCalculatorStore } from '@/store/use-calculator-store'
 import { COMMANDER_TIERS } from '@/lib/constants'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
 
 describe('useCalculatorStore - Target Selection', () => {
   beforeEach(() => {
@@ -122,8 +120,8 @@ describe('useCalculatorStore - Target Selection', () => {
     expect(isTierUnlocked(3)).toBe(false) // Tier 3 still locked (requires 1400)
 
     // Add more to Tier 1 and 2 to reach 1400
-    toggleCommander('Liu Che', 'Infantry', 2) // 500 (Total = 900)
-    toggleCommander('Gorgo', 'Infantry', 2) // 500 (Total = 1400)
+    toggleCommander('Liu Che', 'Infantry', 2) // 500 (translationsotal = 900)
+    toggleCommander('Gorgo', 'Infantry', 2) // 500 (translationsotal = 1400)
 
     expect(isTierUnlocked(3)).toBe(true)
   })
@@ -135,31 +133,22 @@ describe('useCalculatorStore - Target Selection', () => {
     expect(getTierUnlockRequirement(1)).toBeNull()
 
     // Tier 2 missing 400
-    expect(getTierUnlockRequirement(2)).toBe(
-      t(T.common.tierUnlockRequirement, {
-        amount: 400,
-        tokens: t(T.commandersList.tokens),
-        tiers: '1',
-      }),
-    )
+    expect(getTierUnlockRequirement(2)).toStrictEqual({
+      amount: 400,
+      tiers: '1',
+    })
 
     // Add 200 to Tier 1
     toggleCommander('Bai Qi', 'Infantry', 1)
-    expect(getTierUnlockRequirement(2)).toBe(
-      t(T.common.tierUnlockRequirement, {
-        amount: 200,
-        tokens: t(T.commandersList.tokens),
-        tiers: '1',
-      }),
-    )
+    expect(getTierUnlockRequirement(2)).toStrictEqual({
+      amount: 200,
+      tiers: '1',
+    })
 
     // Tier 3 missing 1400 - 200 = 1200
-    expect(getTierUnlockRequirement(3)).toBe(
-      t(T.common.tierUnlockRequirement, {
-        amount: 1200,
-        tokens: t(T.commandersList.tokens),
-        tiers: '1 & 2',
-      }),
-    )
+    expect(getTierUnlockRequirement(3)).toStrictEqual({
+      amount: 1200,
+      tiers: '1 & 2',
+    })
   })
 })

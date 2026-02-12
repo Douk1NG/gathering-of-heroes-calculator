@@ -1,6 +1,7 @@
 import { CheckCircle2 } from 'lucide-react'
-import { cn, t } from '@/lib/utils'
-import { T } from '@/translations'
+import { cn } from '@/lib/utils'
+import { t, translations } from '@/lib/translations'
+
 import { useChallengeMission } from '@/hooks/use-challenge-mission'
 import { type ChallengeMissionButtonProps } from '@/types/components/missions-grid'
 
@@ -20,7 +21,7 @@ export function ChallengeMissionButton({ missionId, name, tokens }: ChallengeMis
       <div className="flex flex-col">
         <span className="text-sm font-medium">{name}</span>
         <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500">
-          +{tokens} {t(T.commandersList.tokens)}
+          +{tokens} {t(translations.commandersList.tokens)}
         </span>
       </div>
       {isCompleted ? (

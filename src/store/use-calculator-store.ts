@@ -8,7 +8,8 @@ import {
   checkUnlockStatus,
   checkTierUnlock,
   getTierUnlockRequirement,
-} from '@/lib/utils'
+} from '@/lib/calculations'
+
 import { COMMANDER_TIERS } from '@/lib/constants'
 import { type CalculatorState } from '@/types/store/calculator-store'
 

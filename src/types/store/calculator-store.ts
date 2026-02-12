@@ -28,5 +28,5 @@ export type CalculatorState = {
   getProgress: () => number
   getSpeedupMinutes: () => number
   isTierUnlocked: (tierId: number) => boolean
-  getTierUnlockRequirement: (tierId: number) => string | null
+  getTierUnlockRequirement: (tierId: number) => { amount: number; tiers: string } | null
 }

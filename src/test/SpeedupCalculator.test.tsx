@@ -2,8 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { SpeedupCalculator } from '@/components/missions-grid/SpeedupCalculator'
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
 
 describe('SpeedupCalculator Component', () => {
   beforeEach(() => {
@@ -30,7 +29,7 @@ describe('SpeedupCalculator Component', () => {
   it('renders the speedup calculator with input field', () => {
     render(<SpeedupCalculator />)
     expect(
-      screen.getByText(new RegExp(`${t(T.missionsGrid.speedupCalculator.title)}`, 'i')),
+      screen.getByText(new RegExp(`${t(translations.missionsGrid.speedupCalculator.title)}`, 'i')),
     ).toBeInTheDocument()
     expect(screen.getByPlaceholderText('EX: 138d 21:20:00')).toBeInTheDocument()
   })
@@ -47,7 +46,9 @@ describe('SpeedupCalculator Component', () => {
   it('does not show calculated result when input is empty', () => {
     render(<SpeedupCalculator />)
     expect(
-      screen.queryByText(new RegExp(t(T.missionsGrid.speedupCalculator.calculatedAddition), 'i')),
+      screen.queryByText(
+        new RegExp(t(translations.missionsGrid.speedupCalculator.calculatedAddition), 'i'),
+      ),
     ).not.toBeInTheDocument()
   })
 
@@ -58,7 +59,7 @@ describe('SpeedupCalculator Component', () => {
     // 1 day = 1440 minutes
     // 1440 / 480 = 3 * 2 = 6 tokens
     expect(
-      screen.getByText(t(T.missionsGrid.speedupCalculator.calculatedAddition)),
+      screen.getByText(t(translations.missionsGrid.speedupCalculator.calculatedAddition)),
     ).toBeInTheDocument()
     expect(screen.getByText('+6')).toBeInTheDocument()
   })
@@ -77,7 +78,7 @@ describe('SpeedupCalculator Component', () => {
   it('shows link to external training calculator', () => {
     render(<SpeedupCalculator />)
     const link = screen
-      .getByText(new RegExp(`${t(T.missionsGrid.speedupCalculator.title)}`, 'i'))
+      .getByText(new RegExp(`${t(translations.missionsGrid.speedupCalculator.title)}`, 'i'))
       .closest('a')
     expect(link).toHaveAttribute('href', 'https://rok-calc.vercel.app/mge-training')
     expect(link).toHaveAttribute('target', '_blank')

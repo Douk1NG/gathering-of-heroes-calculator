@@ -3,8 +3,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { ChallengeMissionButton } from './ChallengeMissionButton'
 import { SpeedupCalculator } from './SpeedupCalculator'
 import { ChallengeTotal } from './ChallengeTotal'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
+
 import { useChallengeMissions } from '@/hooks/use-challenge-missions'
 
 export function ChallengeCard() {
@@ -19,9 +19,9 @@ export function ChallengeCard() {
           </div>
           <div>
             <CardTitle className="text-lg text-white">
-              {t(T.missionsGrid.challenge.title)}
+              {t(translations.missionsGrid.challenge.title)}
             </CardTitle>
-            <CardDescription>{t(T.missionsGrid.challenge.rewards)}</CardDescription>
+            <CardDescription>{t(translations.missionsGrid.challenge.rewards)}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -30,9 +30,7 @@ export function ChallengeCard() {
           <div key={mission.id} className="space-y-2">
             <ChallengeMissionButton
               missionId={mission.id}
-              name={t(
-                T.missionsGrid.challenge[mission.id as keyof typeof T.missionsGrid.challenge],
-              )}
+              name={t(translations.missionsGrid.challenge[mission.id])}
               tokens={mission.tokens}
             />
             {mission.id === 'troop_power' && <SpeedupCalculator />}

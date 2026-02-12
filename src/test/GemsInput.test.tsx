@@ -2,8 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { GemsInput } from '@/components/missions-grid/GemsInput'
 import { useCalculatorStore } from '@/store/use-calculator-store'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
 
 describe('GemsInput Component', () => {
   beforeEach(() => {
@@ -29,17 +28,17 @@ describe('GemsInput Component', () => {
 
   it('renders gem input with correct labels', () => {
     render(<GemsInput />)
-    expect(screen.getByText(t(T.missionsGrid.gemsCalculator.title))).toBeInTheDocument()
-    expect(screen.getByText(t(T.missionsGrid.gemsCalculator.ratio))).toBeInTheDocument()
+    expect(screen.getByText(t(translations.missionsGrid.gemsCalculator.title))).toBeInTheDocument()
+    expect(screen.getByText(t(translations.missionsGrid.gemsCalculator.ratio))).toBeInTheDocument()
     expect(
-      screen.getByPlaceholderText(t(T.missionsGrid.gemsCalculator.placeholder)),
+      screen.getByPlaceholderText(t(translations.missionsGrid.gemsCalculator.placeholder)),
     ).toBeInTheDocument()
   })
 
   it('updates store when gems value changes', () => {
     render(<GemsInput />)
     const input = screen.getByPlaceholderText(
-      t(T.missionsGrid.gemsCalculator.placeholder),
+      t(translations.missionsGrid.gemsCalculator.placeholder),
     ) as HTMLInputElement
 
     fireEvent.change(input, { target: { value: '5000' } })
@@ -48,7 +47,9 @@ describe('GemsInput Component', () => {
 
   it('does not show volume yield when gems is zero', () => {
     render(<GemsInput />)
-    expect(screen.queryByText(t(T.missionsGrid.gemsCalculator.yield))).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(t(translations.missionsGrid.gemsCalculator.yield)),
+    ).not.toBeInTheDocument()
   })
 
   it('displays correct token calculation for 2000 gems', () => {
@@ -70,7 +71,7 @@ describe('GemsInput Component', () => {
     render(<GemsInput />)
     // 2000 / 2000 = 1 * 30 = 30 tokens
     expect(
-      screen.getByText(new RegExp(`\\+30 ${t(T.commandersList.tokens)}`, 'i')),
+      screen.getByText(new RegExp(`\\+30 ${t(translations.commandersList.tokens)}`, 'i')),
     ).toBeInTheDocument()
   })
 
@@ -93,7 +94,7 @@ describe('GemsInput Component', () => {
     render(<GemsInput />)
     // 10000 / 2000 = 5 * 30 = 150 tokens
     expect(
-      screen.getByText(new RegExp(`\\+150 ${t(T.commandersList.tokens)}`, 'i')),
+      screen.getByText(new RegExp(`\\+150 ${t(translations.commandersList.tokens)}`, 'i')),
     ).toBeInTheDocument()
   })
 
@@ -116,7 +117,7 @@ describe('GemsInput Component', () => {
     render(<GemsInput />)
     // 3999 / 2000 = 1.9995 -> floor to 1 * 30 = 30 tokens
     expect(
-      screen.getByText(new RegExp(`\\+30 ${t(T.commandersList.tokens)}`, 'i')),
+      screen.getByText(new RegExp(`\\+30 ${t(translations.commandersList.tokens)}`, 'i')),
     ).toBeInTheDocument()
   })
 })

@@ -1,7 +1,7 @@
-import { t } from '@/lib/utils'
+import { t, translations } from '@/lib/translations'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { T } from '@/translations'
+
 import { useSpeedupInputs } from '@/hooks/use-speedup-inputs'
 
 export function SpeedupInputs() {
@@ -20,10 +20,10 @@ export function SpeedupInputs() {
     <div className="space-y-3 pt-2">
       <div className="flex justify-between items-center px-1">
         <Label className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-          {t(T.missionsGrid.speedupCalculator.manualTitle)}
+          {t(translations.missionsGrid.speedupCalculator.manualTitle)}
         </Label>
         <span className="text-[10px] font-bold text-blue-500/60 uppercase">
-          {t(T.missionsGrid.speedupCalculator.ratio)}
+          {t(translations.missionsGrid.speedupCalculator.ratio)}
         </span>
       </div>
 
@@ -50,7 +50,11 @@ export function SpeedupInputs() {
         {Object.entries(speedupMinutes).map(([category, value]) => (
           <div key={category} className="space-y-1">
             <Label className="text-[9px] font-bold text-neutral-500 uppercase pl-1">
-              {t(T.common.speedupCategories[category as keyof typeof T.common.speedupCategories])}
+              {t(
+                translations.common.speedupCategories[
+                  category as keyof typeof translations.common.speedupCategories
+                ],
+              )}
             </Label>
             <Input
               type="text"
@@ -63,7 +67,7 @@ export function SpeedupInputs() {
         ))}
         <div className="col-span-1 p-2 rounded-lg bg-white/5 border border-white/10 flex flex-col justify-center items-center">
           <span className="text-[8px] text-neutral-500 font-bold uppercase">
-            {t(T.missionsGrid.speedupCalculator.totalPackaged)}
+            {t(translations.missionsGrid.speedupCalculator.totalPackaged)}
           </span>
           <span className="text-xs font-black text-white">
             {manualSpeedupMinutes + calcMinutes}m
@@ -73,10 +77,10 @@ export function SpeedupInputs() {
       {totalSpeedupTokens > 0 && (
         <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 flex justify-between items-center animate-in fade-in duration-300">
           <span className="text-[10px] text-neutral-400 font-bold uppercase tracking-tighter">
-            {t(T.missionsGrid.speedupCalculator.yield)}
+            {t(translations.missionsGrid.speedupCalculator.yield)}
           </span>
           <span className="text-sm font-black text-blue-400">
-            +{totalSpeedupTokens} {t(T.commandersList.tokens)}
+            +{totalSpeedupTokens} {t(translations.commandersList.tokens)}
           </span>
         </div>
       )}

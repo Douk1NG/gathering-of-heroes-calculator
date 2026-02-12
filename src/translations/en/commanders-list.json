@@ -5,5 +5,10 @@
   "totalCost": "Total Cost",
   "gathered": "Gathered",
   "completion": "Completion",
-  "tokens": "Tokens"
+  "tokens": "Tokens",
+  "item": {
+    "tier": "TIER",
+    "tokens": "TOKENS"
+  },
+  "noCommandersSelected": "No commanders selected"
 }

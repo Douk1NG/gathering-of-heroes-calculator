@@ -1,7 +1,7 @@
 import { Zap } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { t } from '@/lib/utils'
-import { T } from '@/translations'
+import { t, translations } from '@/lib/translations'
+
 import { useSpeedupCalculator } from '@/hooks/use-speedup-calculator'
 
 export function SpeedupCalculator() {
@@ -19,32 +19,36 @@ export function SpeedupCalculator() {
             rel="noopener noreferrer"
             className="text-[10px] text-blue-400 hover:text-blue-300 font-black uppercase tracking-wider flex items-center gap-1 transition-colors"
           >
-            {t(T.missionsGrid.speedupCalculator.title)} ↗
+            {t(translations.missionsGrid.speedupCalculator.title)} ↗
           </a>
         </div>
         <span className="text-[10px] text-neutral-500 italic font-medium">
-          {t(T.missionsGrid.speedupCalculator.useResults)}
+          {t(translations.missionsGrid.speedupCalculator.useResults)}
         </span>
       </div>
       <Input
         type="text"
         className="h-10 bg-black/60 border-white/10 font-mono text-xs placeholder:opacity-30 text-center focus-visible:ring-blue-500/20"
         value={speedupTimeStr}
-        placeholder={t(T.missionsGrid.speedupCalculator.manualPlaceholder)}
+        placeholder={t(translations.missionsGrid.speedupCalculator.manualPlaceholder)}
         onChange={(e) => updateSpeedupTime(e.target.value)}
       />
 
       {calculatedMinutes > 0 && (
         <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 flex flex-col justify-center items-center text-center space-y-1 animate-in zoom-in-95 duration-300">
           <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">
-            {t(T.missionsGrid.speedupCalculator.calculatedAddition)}
+            {t(translations.missionsGrid.speedupCalculator.calculatedAddition)}
           </span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-white">+{calculatedTokens}</span>
-            <span className="text-xs font-bold text-neutral-500">{t(T.commandersList.tokens)}</span>
+            <span className="text-xs font-bold text-neutral-500">
+              {t(translations.commandersList.tokens)}
+            </span>
           </div>
           <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-tighter text-center">
-            {t(T.missionsGrid.speedupCalculator.accumulatorNote, { total: calculatedMinutes })}
+            {t(translations.missionsGrid.speedupCalculator.accumulatorNote, {
+              total: calculatedMinutes,
+            })}
           </span>
         </div>
       )}
