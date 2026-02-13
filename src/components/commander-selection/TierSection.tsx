@@ -1,6 +1,5 @@
 import { Lock } from 'lucide-react'
-import { useShallow } from 'zustand/react/shallow'
-import { useCalculatorStore } from '@/store/use-calculator-store'
+import { useTierSection } from '@/hooks/use-tier-section'
 import { cn } from '@/lib/utils'
 import { t, translations } from '@/lib/translations'
 
@@ -8,12 +7,7 @@ import { type TierSectionProps } from '@/types/components/commander-selection'
 import { CommanderButton } from './CommanderButton'
 
 export function TierSection({ tierId, category, commanders }: TierSectionProps) {
-  const { isUnlocked, lockReason } = useCalculatorStore(
-    useShallow((state) => ({
-      isUnlocked: state.isTierUnlocked(tierId),
-      lockReason: state.getTierUnlockRequirement(tierId),
-    })),
-  )
+  const { isUnlocked, lockReason } = useTierSection(tierId)
 
   return (
     <div className={cn('space-y-2 transition-opacity duration-300', !isUnlocked && 'opacity-50')}>
